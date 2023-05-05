@@ -34,8 +34,9 @@ public class UserService implements UserDetailsService {
     }
 
     @Cacheable(key = "#root.methodName")
-    public Collection<User> findAll() {
-        return userRepository.findAll();
+    public Collection<User> findAllUser() {
+        return userRepository.findAllUserDetails()
+                .orElseThrow(() -> new UserNotFoundException("Users not found"));
     }
 
 }

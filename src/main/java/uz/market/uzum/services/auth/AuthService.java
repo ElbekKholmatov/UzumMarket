@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.market.uzum.configuration.jwt.JwtUtils;
+import uz.market.uzum.domains.product.Basket;
 import uz.market.uzum.domains.user.User;
 import uz.market.uzum.dtos.auth.RefreshTokenRequest;
 import uz.market.uzum.dtos.auth.TokenRequest;
@@ -17,10 +18,13 @@ import uz.market.uzum.enums.TokenType;
 import uz.market.uzum.enums.UserStatus;
 import uz.market.uzum.exceptions.ItemNotFoundException;
 import uz.market.uzum.mappers.user.UserMapper;
+import uz.market.uzum.repositories.BasketRepository;
 import uz.market.uzum.repositories.user.UserRepository;
 import uz.market.uzum.repositories.user.UserRolesRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class AuthService {
@@ -29,6 +33,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final UserRolesRepository userRolesRepository;
+    private final BasketRepository basketRepository;
 
     public TokenResponse generateToken(@NonNull TokenRequest tokenRequest) {
         String phoneNumber = tokenRequest.phoneNumber();
@@ -44,7 +49,8 @@ public class AuthService {
         user.setStatus(UserStatus.ACTIVE);
         user.setPassword(this.passwordEncoder.encode(dto.password()));
         user.setRoles(Collections.singletonList(this.userRolesRepository.findByCode("USER")));
-        return this.userRepository.save(user);
+        User savedUser = this.userRepository.save(user);
+        return savedUser;
     }
 
     public TokenResponse refreshToken(@NotNull RefreshTokenRequest refreshTokenRequest) {
@@ -65,11 +71,13 @@ public class AuthService {
             final UserRepository userRepository,
             final PasswordEncoder passwordEncoder,
             final JwtUtils jwtUtils,
-            final UserRolesRepository userRolesRepository) {
+            final UserRolesRepository userRolesRepository,
+            BasketRepository basketRepository) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
         this.userRolesRepository = userRolesRepository;
+        this.basketRepository = basketRepository;
     }
 }

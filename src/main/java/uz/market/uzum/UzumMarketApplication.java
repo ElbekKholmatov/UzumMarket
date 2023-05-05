@@ -2,14 +2,22 @@ package uz.market.uzum;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import uz.market.uzum.repositories.user.UserRepository;
+import uz.market.uzum.repositories.user.UserRolesRepository;
 
 @SpringBootApplication
 public class UzumMarketApplication {
+    private final UserRepository userRepository;
+    private final UserRolesRepository userRolesRepository;
+
+    public UzumMarketApplication(UserRepository userRepository, UserRolesRepository userRolesRepository) {
+        this.userRepository = userRepository;
+        this.userRolesRepository = userRolesRepository;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(UzumMarketApplication.class, args);
     }
-
 
     /*
     todo 1  Elbek order, payment,

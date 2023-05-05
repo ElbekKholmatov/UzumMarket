@@ -1,6 +1,10 @@
 package uz.market.uzum.dtos.auth;
 
 import jakarta.validation.constraints.NotBlank;
+import org.springdoc.core.annotations.ParameterObject;
 
-public record TokenRequest(@NotBlank String phoneNumber, @NotBlank String password) {
+@ParameterObject
+public record TokenRequest(
+        @NotBlank String phoneNumber,
+        @NotBlank String password) {
 }

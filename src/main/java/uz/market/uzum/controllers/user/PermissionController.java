@@ -19,7 +19,6 @@ import uz.market.uzum.services.roles.UserPermissionService;
 
 import java.util.List;
 
-@ParameterObject
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/permission")
@@ -64,7 +63,7 @@ public class PermissionController {
     })
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<UserPermission> update(@PathVariable Integer id, @RequestBody UserPermissionCreateDTO createDTO) {
+    public ResponseEntity<UserPermission> update(@PathVariable Integer id, @Valid @RequestBody UserPermissionCreateDTO createDTO) {
         UserPermission permission = UserPermission.builder()
                 .id(id)
                 .name(createDTO.getName())
