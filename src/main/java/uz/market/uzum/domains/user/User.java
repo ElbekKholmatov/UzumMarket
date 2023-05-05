@@ -1,5 +1,6 @@
 package uz.market.uzum.domains.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,6 +35,8 @@ public class User implements UserDetails {
     private Long id;
     @Column(unique = true)
     private String email;
+
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
@@ -50,6 +53,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     )
     private Collection<UserRole> roles;
+    @JsonIgnore
     private LocalDateTime lastLogin;
     @Builder.Default
     @Enumerated(EnumType.STRING)

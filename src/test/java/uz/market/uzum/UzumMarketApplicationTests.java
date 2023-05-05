@@ -8,6 +8,7 @@ class UzumMarketApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

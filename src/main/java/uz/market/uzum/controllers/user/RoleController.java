@@ -81,8 +81,7 @@ public class RoleController {
     })
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<UserRole> update(@PathVariable Integer id,
-                                           UserRoleCreateDTO dto) {
+    public ResponseEntity<UserRole> update(@PathVariable Integer id, @Valid UserRoleCreateDTO dto) {
         UserRole role = userRoleService.update(id, dto);
         return ResponseEntity.ok(role);
     }
