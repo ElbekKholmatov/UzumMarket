@@ -14,7 +14,7 @@ public class UzumMarketApplication {
 
 
     /*
-    todo 1  Elbek order, payment,
+    todo 1 Elbek order, payment,
     todo 2 Elshod Category product crud test
     todo 3 Abdulloh AKA -  Javohir   user registr qiganda usha userga basket ochilishi kerak
     todo 4 Fayzulloh MR.Xolms Basket bilan ishlash
