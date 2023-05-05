@@ -96,17 +96,3 @@ logbook:
     - '/api/upload'
     - '/api/download'
 
-twilio:
-  account:
-    sid: 123
-  auth:
-    token: 123
-  from:
-    number: '+1620445812332'
-  activation:
-    code:
-      expiry: 10
-  recovery:
-    code: Ecn4lSfRQwlf-sm_JFOb1ARIPu5fp2XRk087d3uD
-
-
