@@ -17,6 +17,7 @@ import java.util.Collection;
 public class Basket extends Auditable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
