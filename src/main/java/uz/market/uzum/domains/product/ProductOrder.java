@@ -25,8 +25,5 @@ public class ProductOrder extends Auditable {
 
     private Short count;
 
-    private ProductOrderStatus status;
-
-    private Long userId;
-
+    private Long basketId;
 }
