@@ -7,8 +7,8 @@ import uz.market.uzum.dtos.auth.UserCreateDTO;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-05T15:23:53+0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.1 (Oracle Corporation)"
+    date = "2023-05-05T20:01:58+0500",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.7 (Amazon.com Inc.)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
