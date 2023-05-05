@@ -17,6 +17,7 @@ import uz.market.uzum.enums.ProductOrderStatus;
 public class ProductOrder extends Auditable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
