@@ -64,6 +64,7 @@ public class SecurityConfigurer {
                         "/v3/api-docs*/**",
                         "/actuator/health*/**",
                         "/api/v1/auth/**",
+                        "/api/v1/comment/**",
                         "/actuator",
                         "/error",
                         "/webjars/**"
@@ -71,6 +72,7 @@ public class SecurityConfigurer {
                 .permitAll()
                 .anyRequest()
                 .fullyAuthenticated()
+//                .permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
