@@ -13,15 +13,22 @@ import lombok.*;
 @Entity
 @Builder
 @ToString
-public class DestinitionPoint {
+public class Destination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String district;
+
+    private String country;
+    private String country_code;
+    private String residential;
+    private String road;
     private String city;
-    private String street;
-    private String house;
+    private String amenity;
+    private String county;
+
     private String aboutPoint;
     private Double longitude;
     private Double latitude;
+
+
 }
