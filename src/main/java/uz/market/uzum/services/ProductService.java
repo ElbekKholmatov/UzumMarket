@@ -2,6 +2,7 @@ package uz.market.uzum.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import uz.market.uzum.domains.Document;
 import uz.market.uzum.domains.product.Category;
@@ -76,7 +77,9 @@ public class ProductService {
         if (dto.getDiscount() != null) {
             product.setDiscount(dto.getDiscount());
         }
-        return productRepository.save(product);
+        Product save = productRepository.save(product);
+        System.out.println(save);
+        return save;
     }
 
     public List<Document> addImages(Integer id, List<MultipartFile> files) {

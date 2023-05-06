@@ -53,10 +53,10 @@ public class CategoryController {
     @Operation(summary = "This API used for deleting a category by id",
             responses = {@ApiResponse(responseCode = "200", description = "Category deleted"),
                     @ApiResponse(responseCode = "404", description = "Category not found")})
-    @DeleteMapping(produces = "application/json")
-    public ResponseEntity<Void> deleteCategory(Integer id) {
-         categoryService.deleteCategory(id);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/delete")
+    public ResponseEntity<Boolean> deleteCategory(Integer id) {
+        boolean b = categoryService.deleteCategory(id);
+        return ResponseEntity.ok(b);
     }
 
     @Operation(summary = "This API used for updating a category",

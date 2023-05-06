@@ -21,8 +21,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class Auditable {
+//@JsonInclude(JsonInclude.Include.NON_NULL)
+public abstract class Auditable {
 
     @CreatedBy
     private Long createdBy;
@@ -37,7 +37,4 @@ public class Auditable {
     private LocalDateTime updatedAt;
 
     private boolean isDeleted;
-
-
-
 }

@@ -29,10 +29,15 @@ public class CategoryService {
     }
 
     public boolean deleteCategory(Integer id) {
-        Category category = getCategoryById(id);
-        category.setDeleted(true);
-        categoryRepository.save(category);
-        return true;
+        try {
+            Category category = getCategoryById(id);
+            category.setDeleted(true);
+            categoryRepository.save(category);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public Category updateCategory(CategoryUpdateDTO dto) {

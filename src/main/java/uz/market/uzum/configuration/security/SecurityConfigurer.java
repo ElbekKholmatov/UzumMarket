@@ -44,7 +44,6 @@ import java.util.Optional;
 
 @Configuration
 @EnableWebSecurity
-@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfigurer {
@@ -172,17 +171,5 @@ public class SecurityConfigurer {
     @Bean
     public UserDetailsService userDetailsService() {
         return userRepository::findByPhoneNumber;
-    }
-
-
-    @Bean
-    AuditorAware<Long> auditorAware() {
-        return () -> {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication == null || !authentication.isAuthenticated()) {
-                return Optional.empty();
-            }
-            return Optional.of(sessionUser.id());
-        };
     }
 }
