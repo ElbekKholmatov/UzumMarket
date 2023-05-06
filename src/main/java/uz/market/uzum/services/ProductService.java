@@ -10,7 +10,7 @@ import uz.market.uzum.dtos.product.ProductCreateDTO;
 import uz.market.uzum.dtos.product.ProductUpdateDTO;
 import uz.market.uzum.enums.ProductStatus;
 import uz.market.uzum.exceptions.ItemNotFoundException;
-import uz.market.uzum.repository.ProductRepository;
+import uz.market.uzum.repositories.ProductRepository;
 
 import java.util.List;
 

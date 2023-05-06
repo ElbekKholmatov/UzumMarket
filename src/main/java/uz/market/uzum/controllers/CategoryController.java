@@ -26,7 +26,6 @@ public class CategoryController {
             @ApiResponse(responseCode = "201", description = "Category created"),
             @ApiResponse(responseCode = "400", description = "Category not created")})
     @PostMapping(value = "/create")
-//    @PreAuthorize("hasAnyRole('ADMIN','MANAGER') and hasPermission('CREATE_CATEGORY')")
     public ResponseEntity<Category> createCategory(@Valid CategoryCreateDTO dto) {
         Category category = categoryService.createCategory(dto);
         return ResponseEntity.status(201).body(category);
@@ -45,7 +44,7 @@ public class CategoryController {
  @Operation(summary = "This API used for getting all categories", responses = {
             @ApiResponse(responseCode = "200", description = "Categories found"),
             @ApiResponse(responseCode = "404", description = "Categories not found")})
-    @GetMapping(value = "/get")
+    @GetMapping(value = "/getAll")
     public ResponseEntity<List<Category>> getAllCategory() {
         List<Category> categories = categoryService.getAll();
         return ResponseEntity.ok(categories);
@@ -55,9 +54,9 @@ public class CategoryController {
             responses = {@ApiResponse(responseCode = "200", description = "Category deleted"),
                     @ApiResponse(responseCode = "404", description = "Category not found")})
     @DeleteMapping(produces = "application/json")
-    public ResponseEntity<Boolean> deleteCategory(Integer id) {
-        boolean isDeleted = categoryService.deleteCategory(id);
-        return ResponseEntity.status(202).body(isDeleted);
+    public ResponseEntity<Void> deleteCategory(Integer id) {
+         categoryService.deleteCategory(id);
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "This API used for updating a category",

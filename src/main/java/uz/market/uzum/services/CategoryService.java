@@ -6,7 +6,7 @@ import uz.market.uzum.domains.product.Category;
 import uz.market.uzum.dtos.category.CategoryCreateDTO;
 import uz.market.uzum.dtos.category.CategoryUpdateDTO;
 import uz.market.uzum.exceptions.ItemNotFoundException;
-import uz.market.uzum.repository.CategoryRepository;
+import uz.market.uzum.repositories.CategoryRepository;
 
 import java.util.List;
 
@@ -24,11 +24,14 @@ public class CategoryService {
     }
 
     public Category getCategoryById(Integer id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Category not found with id: " + id));
+        return categoryRepository.getCategoryById(id).orElseThrow(() -> new ItemNotFoundException("Category not found with id: " + id));
     }
 
     public boolean deleteCategory(Integer id) {
-        return categoryRepository.updateIsDeletedById(id) == 1;
+        Category category = getCategoryById(id);
+        category.setDeleted(true);
+        categoryRepository.save(category);
+        return true;
     }
 
     public Category updateCategory(CategoryUpdateDTO dto) {
@@ -40,6 +43,6 @@ public class CategoryService {
     }
 
     public List<Category> getAll() {
-        return categoryRepository.findAll();
+        return categoryRepository.getAll();
     }
 }
