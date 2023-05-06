@@ -13,20 +13,20 @@ import uz.market.uzum.domains.Document;
 import java.util.Optional;
 
 public interface DocumentRepository extends JpaRepository<Document, Long> {
-    @Query("select d from Document d where d.path = ?1")
+    @Query("select d from Document d where d.isDeleted = false and d.path = ?1")
     Optional<Document> findByPath(String fileName);
 
-    @Query("select d from Document d where d.createdBy = ?1")
+    @Query("select d from Document d where d.isDeleted = false and d.createdBy = ?1")
     Page<Document> findAllByCreatedBy(Long id, Pageable pageable);
 
-    @Query("select d from Document d where d.generatedName = ?1")
+    @Query("select d from Document d where d.isDeleted = false and d.generatedName = ?1")
 
     Optional<Document> findByName(String fileName);
-    @Query("select d from Document d where d.generatedName = ?1")
+    @Query("select d from Document d where d.isDeleted = false and d.generatedName = ?1")
     Document findByNameLink(String fileName);
 
-//    @Transactional
-//    @Modifying
-//    @Query("update Document d set d.deleted = true where d.deleted = false and d.id = ?1")
-//    void deleteDocument(int id);
+    @Transactional
+    @Modifying
+    @Query("update Document d set d.isDeleted = true where d.isDeleted = false and d.id = ?1")
+    void deleteDocument(Long id);
 }

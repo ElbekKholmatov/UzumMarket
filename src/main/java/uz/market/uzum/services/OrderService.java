@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
+    private final OrderMapper orderMapper = OrderMapper.INSTANCE;
     private final OrderPaginationRepository orderPaginationRepository;
 
     public AddToOrderDTO addToOrderInstallment(AddToOrderDTO addToOrderDTO) {
