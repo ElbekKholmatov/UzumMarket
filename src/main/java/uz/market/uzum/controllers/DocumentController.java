@@ -7,10 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 import uz.market.uzum.domains.Document;
 import uz.market.uzum.services.DocumentService;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/document")
 public class DocumentController {
