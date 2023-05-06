@@ -1,0 +1,1 @@
+insert into user_role(code, name) values('USER', 'User role');
