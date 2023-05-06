@@ -11,11 +11,10 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+@ToString
 public class Document extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private Long id;
 
     @Column(nullable = false)
@@ -28,11 +27,9 @@ public class Document extends Auditable {
     private String mimeType;
     @Column(nullable = false)
     private Long size;
-
-    @Builder(builderMethodName = "documentBuilder")
-    public Document(Long createdBy, Long updateBy, LocalDateTime createdAt, LocalDateTime updatedAt,
-                    boolean isDeleted, Long id, String originalName, String generatedName, String extension,
-                    String mimeType, Long size) {
+    private String path;
+    @Builder(builderMethodName = "childBuilder")
+    public Document(Long createdBy, Long updateBy, LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDeleted, Long id, String originalName, String generatedName, String extension, String mimeType, Long size, String path) {
         super(createdBy, updateBy, createdAt, updatedAt, isDeleted);
         this.id = id;
         this.originalName = originalName;
@@ -40,6 +37,6 @@ public class Document extends Auditable {
         this.extension = extension;
         this.mimeType = mimeType;
         this.size = size;
+        this.path = path;
     }
-
 }

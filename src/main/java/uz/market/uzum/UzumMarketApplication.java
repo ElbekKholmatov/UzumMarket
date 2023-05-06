@@ -2,8 +2,11 @@ package uz.market.uzum;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EnableJpaRepositories
 public class UzumMarketApplication {
 
     public static void main(String[] args) {
@@ -12,7 +15,7 @@ public class UzumMarketApplication {
 
 
     /*
-    todo 1  Elbek order, payment,
+    todo 1 Elbek order, payment,
     todo 2 Elshod Category product crud test
     todo 3 Abdulloh AKA -  Javohir   user registr qiganda usha userga basket ochilishi kerak
     todo 4 Fayzulloh MR.Xolms Basket bilan ishlash
