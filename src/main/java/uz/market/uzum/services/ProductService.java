@@ -22,6 +22,9 @@ public class ProductService {
 
     public Product createProduct(ProductCreateDTO dto) {
         Category categoryById = categoryService.getCategoryById(dto.getCategoryID());
+        if (categoryById == null) {
+            throw new ItemNotFoundException("Category Not found with id: " + dto.getCategoryID());
+        }
         Product product = Product.childBuilder()
                 .price(dto.getPrice())
                 .count(dto.getCount())
@@ -40,6 +43,10 @@ public class ProductService {
     }
 
     public List<Product> getCategoryProducts(Integer categoryID) {
+        Category categoryById = categoryService.getCategoryById(categoryID);
+        if (categoryById == null) {
+            throw new ItemNotFoundException("Category Not found with ID: " + categoryID);
+        }
         return productRepository.findByCategoryId(categoryID);
     }
 
@@ -48,13 +55,27 @@ public class ProductService {
     }
 
     public Product updateProduct(ProductUpdateDTO dto) {
-        Product product = getProductById(dto.getProductID());
+        Product product = this.getProductById(dto.getProductID());
+        if (product == null) {
+            throw new ItemNotFoundException("Product Not found with id: " + dto.getProductID());
+        }
         Category category = categoryService.getCategoryById(dto.getCategoryID());
-        product.setName(dto.getName());
-        product.setPrice(dto.getPrice());
+        if (category == null) {
+            throw new ItemNotFoundException("Category Not found with id: " + dto.getCategoryID());
+        }
+        if (dto.getName() != null) {
+            product.setName(dto.getName());
+        }
+        if (dto.getPrice() != null) {
+            product.setPrice(dto.getPrice());
+        }
         product.setCategory(category);
-        product.setDescription(dto.getDescription());
-        product.setDiscount(dto.getDiscount());
+        if (dto.getDescription() != null) {
+            product.setDescription(dto.getDescription());
+        }
+        if (dto.getDiscount() != null) {
+            product.setDiscount(dto.getDiscount());
+        }
         return productRepository.save(product);
     }
 
