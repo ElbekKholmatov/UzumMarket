@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uz.market.uzum.domains.product.Category;
 import uz.market.uzum.dtos.category.CategoryCreateDTO;
+import uz.market.uzum.dtos.category.CategoryUpdateDTO;
 import uz.market.uzum.dtos.order.AddToOrderDTO;
 import uz.market.uzum.exceptions.ItemNotFoundException;
 import uz.market.uzum.mappers.product.OrderMapper;
@@ -84,6 +85,16 @@ class CategoryServiceTest {
 
     @Test
     void updateCategory() {
+        Category category = Category.childBuilder().id(2).name("Test").build();
+        when(categoryRepository.getCategoryById(2)).thenReturn(Optional.of(category));
+        when(categoryRepository.save(any())).thenReturn(category);
+        CategoryUpdateDTO dto = CategoryUpdateDTO.builder()
+                .categoryID(2)
+                .name("123")
+                .build();
+        Category actual = categoryService.updateCategory(dto);
+        assertEquals(2, actual.getId());
+//        verify(categoryRepository, atLeastOnce()).save(any());
     }
 
     @Test

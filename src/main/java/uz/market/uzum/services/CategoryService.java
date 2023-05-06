@@ -37,9 +37,12 @@ public class CategoryService {
 
     public Category updateCategory(CategoryUpdateDTO dto) {
         Category category = getCategoryById(dto.getCategoryID());
-        Category parent = getCategoryById(dto.getParentID());
-        category.setName(dto.getName());
-        category.setParent(parent);
+        if (dto.getParentID() != null) {
+            category.setParent(getCategoryById(dto.getParentID()));
+        }
+        if (dto.getName() != null) {
+            category.setName(dto.getName());
+        }
         return categoryRepository.save(category);
     }
 

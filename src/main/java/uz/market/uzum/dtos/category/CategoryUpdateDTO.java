@@ -19,7 +19,7 @@ public class CategoryUpdateDTO {
     @NotNull(message = "Category Id cannot be null")
     private Integer categoryID;
 
-    @Size(min = 3, max = 35, message = "Category name size must be 3-35 character")
+    @Size(min = 3, max = 50, message = "Category name must be between {min} and {max} character")
     private String name;
 
     private Integer parentID;
