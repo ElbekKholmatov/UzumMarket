@@ -9,13 +9,6 @@ import uz.market.uzum.services.CategoryService;
 
 @SpringBootTest
 class UzumMarketApplicationTests {
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Mock
-    private CategoryRepository categoryRepository;
-
     @Test
     void contextLoads() {
     }

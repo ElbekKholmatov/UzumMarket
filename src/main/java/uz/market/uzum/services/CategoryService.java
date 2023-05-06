@@ -16,15 +16,16 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public Category createCategory(CategoryCreateDTO dto) {
-        Category parent = getCategoryById(dto.getParentID());
-        return categoryRepository.save(Category.childBuilder()
-                .name(dto.getName())
-                .parent(parent)
-                .build());
+        Category category = new Category();
+        category.setName(dto.getName());
+        if (dto.getParentID() != null)
+            category.setParent(getCategoryById(dto.getParentID()));
+        return categoryRepository.save(category);
     }
 
     public Category getCategoryById(Integer id) {
-        return categoryRepository.getCategoryById(id).orElseThrow(() -> new ItemNotFoundException("Category not found with id: " + id));
+        return categoryRepository.getCategoryById(id)
+                .orElseThrow(() -> new ItemNotFoundException("Category not found with id: " + id));
     }
 
     public boolean deleteCategory(Integer id) {
