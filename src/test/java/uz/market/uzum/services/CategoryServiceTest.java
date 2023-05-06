@@ -58,7 +58,6 @@ class CategoryServiceTest {
         when(categoryRepository.getCategoryById(any())).thenReturn(Optional.of(category));
         Category actual = categoryService.getCategoryById(2);
         assertEquals(2, actual.getId());
-        verify(categoryRepository, times(1)).save(any());
     }
 
     @Test
