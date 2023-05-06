@@ -26,7 +26,6 @@ public class Destination {
     private String amenity;
     private String county;
 
-    private String aboutPoint;
     private Double longitude;
     private Double latitude;
 
