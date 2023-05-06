@@ -86,6 +86,6 @@ public class ProductService {
         return documents;
     }
     public Product getProductById(Long productId) {
-        return productRepository.findById(productId).orElseThrow(() -> new ItemNotFoundException("Product not found"));
+        return productRepository.findById(Math.toIntExact(productId)).orElseThrow(() -> new ItemNotFoundException("Product not found"));
     }
 }
