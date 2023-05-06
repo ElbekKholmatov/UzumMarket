@@ -9,6 +9,7 @@ import uz.market.uzum.exceptions.UserNotFoundException;
 import uz.market.uzum.repositories.user.UserRepository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -30,5 +31,9 @@ public class UserService implements UserDetailsService {
 
     public Collection<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public Optional<User> getUserByPhoneNumber(String phoneNumber) {
+        return Optional.of(userRepository.findByPhoneNumber(phoneNumber));
     }
 }

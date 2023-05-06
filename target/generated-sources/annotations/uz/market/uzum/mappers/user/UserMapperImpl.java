@@ -7,7 +7,7 @@ import uz.market.uzum.dtos.auth.UserCreateDTO;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-05T15:23:53+0500",
+    date = "2023-05-06T06:31:05+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.1 (Oracle Corporation)"
 )
 @Component

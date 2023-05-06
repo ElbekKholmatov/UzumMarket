@@ -20,6 +20,7 @@ import java.util.Collection;
 public class Product extends Auditable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Integer price;

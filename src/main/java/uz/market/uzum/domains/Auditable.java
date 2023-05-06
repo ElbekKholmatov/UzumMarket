@@ -1,6 +1,8 @@
 package uz.market.uzum.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
@@ -35,6 +37,9 @@ public class Auditable {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @JsonIgnore
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isDeleted;
 
 
