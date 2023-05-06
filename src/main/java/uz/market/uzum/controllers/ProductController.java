@@ -33,8 +33,8 @@ public class ProductController {
             @ApiResponse(responseCode = "400", description = "Product not created")})
     @PostMapping(value = "/create")
     public ResponseEntity<Product> createProduct(@Valid ProductCreateDTO dto) {
-//        Product product = productService.createProduct(dto);
-        return ResponseEntity.status(201).body(new Product());
+        Product product = productService.createProduct(dto);
+        return ResponseEntity.status(201).body(product);
     }
 
     @Operation(summary = "This API used for adding pictures to a product", responses = {
@@ -81,8 +81,8 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Product not found")})
     @PutMapping(value = "/update")
     public ResponseEntity<Product> updateProduct(@Valid ProductUpdateDTO dto) {
-//        Product product = productService.updateProduct(dto);
-        return ResponseEntity.status(204).body(new Product());
+        Product product = productService.updateProduct(dto);
+        return ResponseEntity.status(204).body(product);
     }
 
 
