@@ -30,7 +30,7 @@ public class Product extends Auditable {
     private Byte rating;
     private String description;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Category category;
 
     @OneToMany

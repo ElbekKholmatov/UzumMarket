@@ -8,16 +8,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uz.market.uzum.domains.product.Category;
 import uz.market.uzum.domains.product.Product;
-import uz.market.uzum.dtos.category.CategoryCreateDTO;
 import uz.market.uzum.dtos.product.ProductCreateDTO;
 import uz.market.uzum.dtos.product.ProductUpdateDTO;
 import uz.market.uzum.enums.ProductStatus;
 import uz.market.uzum.exceptions.ItemNotFoundException;
-import uz.market.uzum.mappers.product.OrderMapper;
-import uz.market.uzum.repositories.CategoryRepository;
 import uz.market.uzum.repositories.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,7 +73,7 @@ class ProductServiceTest {
     @Test
     void getProductById() {
         Product product = Product.childBuilder().id(2).build();
-        when(productRepository.findById(1)).thenReturn(Optional.of(product));
+        when(productRepository.getProductById(1)).thenReturn(Optional.of(product));
         Product actual = productService.getProductById(1);
         assertEquals(2, actual.getId());
     }
@@ -85,7 +81,7 @@ class ProductServiceTest {
     @Test
     void getProductByIdShouldThrowException() {
         Product product = Product.childBuilder().id(2).build();
-        when(productRepository.findById(2)).thenReturn(Optional.of(product));
+        when(productRepository.getProductById(2)).thenReturn(Optional.of(product));
         assertThrows(ItemNotFoundException.class, () -> productService.getProductById(1)).printStackTrace();
     }
 
@@ -120,7 +116,7 @@ class ProductServiceTest {
     void updateProduct() {
         Product product = Product.childBuilder().id(1).build();
         when(productRepository.save(any())).thenReturn(product);
-        when(productRepository.findById(1)).thenReturn(Optional.of(product));
+        when(productRepository.getProductById(1)).thenReturn(Optional.of(product));
         when(categoryService.getCategoryById(2)).thenReturn(Category.childBuilder().id(2).build());
         ProductUpdateDTO dto = ProductUpdateDTO.builder()
                 .productID(1)
@@ -136,7 +132,7 @@ class ProductServiceTest {
     void updateProductShouldThrowException() {
         Product product = Product.childBuilder().id(1).build();
         when(productRepository.save(any())).thenReturn(product);
-        when(productRepository.findById(1)).thenReturn(Optional.of(product));
+        when(productRepository.getProductById(1)).thenReturn(Optional.of(product));
         when(categoryService.getCategoryById(2)).thenReturn(Category.childBuilder().id(2).build());
         ProductUpdateDTO dto = ProductUpdateDTO.builder()
                 .productID(2)

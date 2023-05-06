@@ -5,8 +5,9 @@ import org.springframework.stereotype.Component;
 import uz.market.uzum.domains.product.Order;
 import uz.market.uzum.dtos.order.AddToOrderDTO;
 
-@Mapper()
+@Mapper(componentModel = "spring")
 public interface OrderMapper {
+
  Order toOrder(AddToOrderDTO addToOrderDTO);
  AddToOrderDTO toAppToOrderDTO(Order order);
 
