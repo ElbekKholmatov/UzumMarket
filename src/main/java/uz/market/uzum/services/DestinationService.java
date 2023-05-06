@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import uz.market.uzum.domains.Destination;
 import uz.market.uzum.repositories.DestinationRepository;
@@ -18,10 +19,9 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN')")
 public class DestinationService {
-
     private final DestinationRepository destinationRepository;
-
 
     public String convertToAddress(double latitude, double longitude) {
 
@@ -58,7 +58,7 @@ public class DestinationService {
             String amenity = address.has("amenity") ? address.getString("amenity") : "";
             String county = address.has("county") ? address.getString("county") : "";
 
-            Destination destination = destinationRepository.save(Destination.builder()
+            Destination destination = destinationRepository.save(Destination.childbuilder()
                     .county(country)
                     .country_code(country_code)
                     .residential(residential)
