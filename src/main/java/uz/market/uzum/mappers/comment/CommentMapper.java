@@ -14,7 +14,7 @@ import uz.market.uzum.dtos.comment.CommentUpdateDTO;
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
 
-     CommentMapper COMMENT_MAPPER= Mappers.getMapper(CommentMapper.class);
+     CommentMapper COMMENT_MAPPER = Mappers.getMapper(CommentMapper.class);
 
      CommentCreateDto toDto(Comment comment);
 

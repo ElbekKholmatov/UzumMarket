@@ -16,5 +16,5 @@ import org.springframework.stereotype.Component;
 public class CommentCreateDto {
     private String text;
     private Byte rate;
-    private Long productId;
+    private Integer productId;
 }

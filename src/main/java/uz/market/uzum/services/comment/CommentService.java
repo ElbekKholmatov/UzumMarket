@@ -11,6 +11,7 @@ import uz.market.uzum.repositories.CommentRepository;
 import uz.market.uzum.repositories.ProductRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 import static uz.market.uzum.mappers.comment.CommentMapper.COMMENT_MAPPER;
 
@@ -21,20 +22,24 @@ public class CommentService {
     private final ProductRepository productRepository;
     private  final CommentRepository commentRepository;
 
+
+
     public Comment create(CommentCreateDto dto){
         Comment comment = COMMENT_MAPPER.toEntity(dto);
-        System.out.println("comment = " + comment);
+         return commentRepository.save(comment);
+
+    }
+
+    public Comment update(CommentUpdateDTO dto, Integer id){
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Comment not found "));
+        if(comment.isDeleted()) throw new  RuntimeException("Comment deleted by "+id);
+        comment.setRate(Objects.requireNonNullElse(dto.getRate(),comment.getRate()));
+        comment.setText(Objects.requireNonNullElse(dto.getText(),comment.getText()));
+        comment.setProductId(Objects.requireNonNullElse(dto.getProductId(),comment.getProductId()));
         return commentRepository.save(comment);
     }
 
-    public Comment update(CommentUpdateDTO dto, Long id){
-        Comment comment = commentRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Comment not found "));
-        if(comment.isDeleted()) throw new  RuntimeException("Comment deleted by "+id);
-        COMMENT_MAPPER.toUpdateCommentEntity(dto,comment);
-        return comment;
-    }
-
-    public Comment delete(Long id){
+    public Comment delete(Integer id){
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Comment not found "));
         comment.setDeleted(true);
         return comment;

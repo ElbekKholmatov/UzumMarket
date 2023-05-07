@@ -30,11 +30,11 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public Comment update(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable Long id){
+    public Comment update(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable Integer id){
         return commentService.update(commentUpdateDTO,id);
     }
     @DeleteMapping("/{id}")
-    public Comment delete(@PathVariable Long id){
+    public Comment delete(@PathVariable Integer id){
         return commentService.delete(id);
     }
 

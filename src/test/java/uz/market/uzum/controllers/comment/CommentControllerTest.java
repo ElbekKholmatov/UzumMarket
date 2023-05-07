@@ -48,7 +48,7 @@ public class CommentControllerTest {
         Comment comment = Comment.commentBuilder()
                 .rate((byte) 2)
                 .text("comment")
-                .productId(1L)
+                .productId(1)
                 .build();
 
         when(commentService.create(any())).thenReturn(comment);
@@ -74,7 +74,7 @@ public class CommentControllerTest {
 
 
 
-        when(commentService.getComments(anyInt())).thenReturn(List.of(Comment.commentBuilder().id(1L).build()));
+        when(commentService.getComments(anyInt())).thenReturn(List.of(Comment.commentBuilder().id(1).build()));
         MvcResult mvcResult = mockMvc.perform(get("/api/v1/comment/{productId}", 1)
                         .contentType("application/json"))
                 .andExpect(status().isOk())
@@ -90,13 +90,13 @@ public class CommentControllerTest {
 
     @Test
     public void updateCommentTest() throws Exception {
-        Long commentId = 1L;
+        int commentId = 1;
         CommentUpdateDTO commentUpdateDTO = new CommentUpdateDTO();
         commentUpdateDTO.setText("Updated comment");
 
         Comment comment = new Comment();
         comment.setId(commentId);
-        comment.setProductId(1L);
+        comment.setProductId(1);
         comment.setText("Test comment");
 
         when(commentService.update(any(CommentUpdateDTO.class), eq(commentId))).thenReturn(comment);
@@ -113,7 +113,7 @@ public class CommentControllerTest {
     @WithMockUser(username = "A", authorities = "A")
     public void deleteCommentTest() throws Exception {
 
-        Comment comment = Comment.commentBuilder().id(1L).build();
+        Comment comment = Comment.commentBuilder().id(1).build();
 
         when(commentService.delete(comment.getId())).thenReturn(comment);
 
