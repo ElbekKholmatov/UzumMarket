@@ -15,8 +15,6 @@ import uz.market.uzum.dtos.order.AddToOrderDTO;
 import uz.market.uzum.enums.OrderStatus;
 import uz.market.uzum.services.OrderService;
 
-import java.util.Collection;
-
 @Validated
 @RestController
 @RequiredArgsConstructor

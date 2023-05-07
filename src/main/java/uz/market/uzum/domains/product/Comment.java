@@ -2,7 +2,6 @@ package uz.market.uzum.domains.product;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
 import uz.market.uzum.domains.Auditable;
 
@@ -18,7 +17,7 @@ public class Comment extends Auditable {
 
     @Id
     private Long id;
-    private Byte rate;  // rating
+    private Byte rate;
     private String text;
     private Long productId;
 

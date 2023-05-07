@@ -1,14 +1,13 @@
 package uz.market.uzum.domains.product;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.Accessors;
 import uz.market.uzum.domains.Auditable;
 import uz.market.uzum.domains.Document;
 import uz.market.uzum.enums.ProductStatus;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 

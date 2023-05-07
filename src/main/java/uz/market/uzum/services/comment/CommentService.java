@@ -4,13 +4,11 @@ package uz.market.uzum.services.comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.market.uzum.domains.product.Comment;
-import uz.market.uzum.domains.product.Product;
 import uz.market.uzum.dtos.comment.CommentCreateDto;
 import uz.market.uzum.dtos.comment.CommentUpdateDTO;
 import uz.market.uzum.exceptions.ItemNotFoundException;
 import uz.market.uzum.repositories.CommentRepository;
 import uz.market.uzum.repositories.product.ProductRepository;
-import uz.market.uzum.repositories.user.UserRepository;
 
 import java.util.List;
 

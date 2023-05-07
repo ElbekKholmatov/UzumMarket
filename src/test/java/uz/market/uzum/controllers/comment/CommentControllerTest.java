@@ -75,7 +75,7 @@ public class CommentControllerTest {
     @Test
     public void getCommentsByProductIdTest() throws Exception {
         Product product = new Product()
-                .setId(1L)
+                .setId(1)
                 .setName("A");
         productRepository.saveAndFlush(product);
 

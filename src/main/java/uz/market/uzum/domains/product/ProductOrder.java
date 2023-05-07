@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.market.uzum.domains.Auditable;
-import uz.market.uzum.enums.ProductOrderStatus;
 
 
 @Setter
