@@ -26,7 +26,7 @@ class UserRoleServiceTest {
     public static final String UPDATE_ROLE = "UPDATE_ROLE";
     private static final String ROLE_CODE = "USER";
     private static final String ROLE_NAME = "User role";
-    public static final String UPDATE_ROLE_NAME = "Update role name";
+    private static final String UPDATE_ROLE_NAME = "Update role name";
     @Autowired
     UserRoleService userRoleService;
 
