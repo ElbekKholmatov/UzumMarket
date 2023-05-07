@@ -1,5 +1,7 @@
 package uz.market.uzum.controllers;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,21 +19,21 @@ public class DocumentController {
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Document> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Document> uploadFile(@Valid @NotNull @RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok(
                 documentService.saveDocument(file)
         );
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Document> updateFile(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id) {
+    public ResponseEntity<Document> updateFile(@Valid @NotNull  @RequestParam("file") MultipartFile file, @PathVariable("id") Long id) {
         return ResponseEntity.ok(
                 documentService.updateDocument(file, id)
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Document> getDocument(@PathVariable Long id) {
+    public ResponseEntity<Document> getDocument(@Valid @NotNull  @PathVariable Long id) {
         return ResponseEntity.ok(
                 documentService.getDocument(id).orElseThrow(
                         () -> new RuntimeException("Document not found")
@@ -41,7 +43,7 @@ public class DocumentController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+    public ResponseEntity<Boolean> delete(@Valid @NotNull  @PathVariable Long id) {
         documentService.deleteDocument(id);
         return ResponseEntity.ok(true);
     }

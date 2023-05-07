@@ -268,3 +268,4 @@ fabric.properties
 /.idea/misc.xml
 /.idea/vcs.xml
 /.jpb/jpb-settings.xml
+/target/
