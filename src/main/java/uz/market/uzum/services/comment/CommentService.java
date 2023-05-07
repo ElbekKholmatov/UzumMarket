@@ -10,7 +10,6 @@ import uz.market.uzum.exceptions.ItemNotFoundException;
 import uz.market.uzum.repositories.CommentRepository;
 import uz.market.uzum.repositories.ProductRepository;
 
-
 import java.util.List;
 
 import static uz.market.uzum.mappers.comment.CommentMapper.COMMENT_MAPPER;
