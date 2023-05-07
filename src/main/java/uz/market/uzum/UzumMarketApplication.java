@@ -5,21 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableAsync;
-import uz.market.uzum.repositories.user.UserRepository;
-import uz.market.uzum.repositories.user.UserRolesRepository;
 
 @EnableAsync
 @EnableJpaAuditing
 @SpringBootApplication
 @OpenAPIDefinition
 public class UzumMarketApplication {
-    private final UserRepository userRepository;
-    private final UserRolesRepository userRolesRepository;
-
-    public UzumMarketApplication(UserRepository userRepository, UserRolesRepository userRolesRepository) {
-        this.userRepository = userRepository;
-        this.userRolesRepository = userRolesRepository;
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(UzumMarketApplication.class, args);
