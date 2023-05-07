@@ -27,6 +27,9 @@ public class RoleController {
 
     private final UserRoleService userRoleService;
 
+
+
+
     @Operation(summary = "This API used for creating a role",
             description = "This endpoint was designed for creating a role")
     @ApiResponses(value = {
@@ -49,9 +52,9 @@ public class RoleController {
                             )
                     })
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @PostMapping("/")
-    public ResponseEntity<UserRole> create(@RequestBody @Valid UserRoleCreateDTO dto) {
+    public ResponseEntity<UserRole> create(@Valid UserRoleCreateDTO dto) {
         UserRole role = userRoleService.save(dto);
         return ResponseEntity.ok(role);
     }
@@ -79,10 +82,9 @@ public class RoleController {
                             )
                     })
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<UserRole> update(@PathVariable Integer id,
-                                           UserRoleCreateDTO dto) {
+    public ResponseEntity<UserRole> update(@PathVariable Integer id, @Valid UserRoleCreateDTO dto) {
         UserRole role = userRoleService.update(id, dto);
         return ResponseEntity.ok(role);
     }
@@ -110,7 +112,7 @@ public class RoleController {
                             )
                     })
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<UserRole> get(@PathVariable Integer id) {
         UserRole role = userRoleService.get(id);
@@ -140,7 +142,7 @@ public class RoleController {
                             )
                     })
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<UserRole> delete(@PathVariable Integer id) {
         userRoleService.delete(id);
@@ -169,7 +171,7 @@ public class RoleController {
                             )
                     })
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @GetMapping("/roles")
     public ResponseEntity<List<UserRole>> roles() {
         List<UserRole> roleList = userRoleService.getRoles();
@@ -192,9 +194,9 @@ public class RoleController {
                             )
                     })
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @PostMapping("/addPermission")
-    public ResponseEntity<UserRole> addPermission(@RequestBody @Valid UserRolePermissionDTO dto) {
+    public ResponseEntity<UserRole> addPermission(@Valid UserRolePermissionDTO dto) {
         UserRole role = userRoleService.addPermission(dto);
         return ResponseEntity.ok(role);
     }
@@ -216,10 +218,12 @@ public class RoleController {
                             )
                     })
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
-    @PostMapping("/removePermission")
-    public ResponseEntity<UserRole> removePermission(@RequestBody @Valid UserRolePermissionDTO dto) {
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
+    @DeleteMapping("/removePermission")
+    public ResponseEntity<UserRole> removePermission(@Valid UserRolePermissionDTO dto) {
         UserRole role = userRoleService.removePermission(dto);
         return ResponseEntity.ok(role);
     }
+
+
 }

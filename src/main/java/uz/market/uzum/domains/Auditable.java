@@ -38,6 +38,4 @@ public class Auditable {
 
     private boolean isDeleted;
 
-
-
 }

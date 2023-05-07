@@ -1,6 +1,5 @@
 package uz.market.uzum.repositories;
 
-import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,10 +12,10 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    @Query("select p from Product p where p.isDeleted = false and p.id = ?1 and p.category.id = ?2")
-    @NonNull Optional<Product> findById(@NonNull Integer id);
+    @Query("select p from Product p where p.isDeleted = false and p.id = ?1")
+    Optional<Product> getProductById(Integer id);
 
-    @Query("select p from Product p where p.category.id = ?1")
+    @Query("select p from Product p where p.isDeleted = false and p.category.id = ?1")
     List<Product> findByCategoryId(Integer categoryID);
 
 
