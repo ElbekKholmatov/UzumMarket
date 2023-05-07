@@ -1,11 +1,17 @@
 package uz.market.uzum;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableAsync;
 import uz.market.uzum.repositories.user.UserRepository;
 import uz.market.uzum.repositories.user.UserRolesRepository;
 
+@EnableAsync
+@EnableJpaAuditing
 @SpringBootApplication
+@OpenAPIDefinition
 public class UzumMarketApplication {
     private final UserRepository userRepository;
     private final UserRolesRepository userRolesRepository;

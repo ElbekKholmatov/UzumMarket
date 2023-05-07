@@ -11,6 +11,8 @@ spring:
   sql:
     init:
       mode: always
+  main:
+    allow-bean-definition-overriding: true
 
   datasource:
     driverClassName: org.postgresql.Driver

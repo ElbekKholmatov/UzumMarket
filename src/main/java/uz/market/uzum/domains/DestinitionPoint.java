@@ -14,6 +14,7 @@ import lombok.*;
 @Builder
 @ToString
 public class DestinitionPoint {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

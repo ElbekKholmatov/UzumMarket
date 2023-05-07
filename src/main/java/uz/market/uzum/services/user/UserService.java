@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
     @Cacheable(key = "#username")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByPhoneNumber(username);
+        return userRepository.findByEmail(username);
     }
 
     @Cacheable(key = "#userId")

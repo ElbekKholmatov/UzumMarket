@@ -42,8 +42,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String firstName;
     private String lastName;
-    @Column(unique = true, nullable = false)
-    private String phoneNumber;
     @Column(nullable = false)
     @ManyToMany(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
@@ -77,7 +75,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getPhoneNumber();
+        return getEmail();
     }
 
     @Override

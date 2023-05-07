@@ -41,7 +41,7 @@ public class AuthController {
             }
     )
     @PostMapping({"/refresh/token"})
-    public ResponseEntity<TokenResponse> refreshToken(@Valid  RefreshTokenRequest refreshTokenRequest) {
+    public ResponseEntity<TokenResponse> refreshToken(@Valid RefreshTokenRequest refreshTokenRequest) {
         return ResponseEntity.ok(this.authService.refreshToken(refreshTokenRequest));
     }
 
@@ -54,4 +54,14 @@ public class AuthController {
         return ResponseEntity.ok(this.authService.create(dto));
     }
 
+    @Operation(summary = "This API is used for adding role to user", responses = {
+            @ApiResponse(responseCode = "200", description = "Role added",
+                    content = @Content(schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = AppErrorDTO.class)))
+    })
+    @PostMapping({"/addRole"})
+    public ResponseEntity<String> addRole(@NonNull Long userId, @NonNull Integer roleId) {
+        return ResponseEntity.ok(this.authService.addRole(userId, roleId));
+    }
 }

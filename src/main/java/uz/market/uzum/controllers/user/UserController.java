@@ -28,7 +28,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "User found"),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @GetMapping(value = "{userId}", produces = "application/json")
     public User getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId);

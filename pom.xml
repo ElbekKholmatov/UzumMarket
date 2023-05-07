@@ -71,11 +71,6 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.github.pengrad</groupId>
-            <artifactId>java-telegram-bot-api</artifactId>
-            <version>6.6.1</version>
-        </dependency>
 
         <dependency>
             <groupId>com.google.zxing</groupId>
@@ -189,7 +184,6 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
 
