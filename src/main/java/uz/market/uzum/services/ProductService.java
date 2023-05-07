@@ -85,4 +85,7 @@ public class ProductService {
         product.setImages(documents);
         return documents;
     }
+    public Product getProductById(Long productId) {
+        return productRepository.findById(Math.toIntExact(productId)).orElseThrow(() -> new ItemNotFoundException("Product not found"));
+    }
 }

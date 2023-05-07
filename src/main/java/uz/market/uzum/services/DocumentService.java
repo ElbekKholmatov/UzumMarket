@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import uz.market.uzum.domains.Document;
 import uz.market.uzum.repositories.DocumentRepository;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import static java.util.UUID.randomUUID;

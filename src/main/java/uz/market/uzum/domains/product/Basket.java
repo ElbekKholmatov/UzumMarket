@@ -8,13 +8,12 @@ import uz.market.uzum.domains.user.User;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-
+@Builder
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
 public class Basket extends Auditable {
 
     @Id
