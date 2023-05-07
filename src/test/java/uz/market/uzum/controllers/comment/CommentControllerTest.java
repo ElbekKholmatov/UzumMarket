@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import uz.market.uzum.UzumMarketApplication;
 import uz.market.uzum.domains.product.Comment;
-import uz.market.uzum.domains.product.Product;
 import uz.market.uzum.dtos.comment.CommentUpdateDTO;
 import uz.market.uzum.repositories.ProductRepository;
 import uz.market.uzum.services.comment.CommentService;
@@ -41,8 +40,7 @@ public class CommentControllerTest {
 
     @Autowired
     ObjectMapper objectMapper;
-    @Autowired
-    ProductRepository productRepository;
+
 
     @Test
     public void createCommentTest() throws Exception {
@@ -51,7 +49,7 @@ public class CommentControllerTest {
         Comment comment = Comment.commentBuilder()
                 .rate((byte) 2)
                 .text("comment")
-                .productId(1L)
+                .productId(1)
                 .build();
 
         when(commentService.create(any())).thenReturn(comment);
@@ -74,34 +72,32 @@ public class CommentControllerTest {
 
     @Test
     public void getCommentsByProductIdTest() throws Exception {
-        Product product = new Product()
-                .setId(1)
-                .setName("A");
-        productRepository.saveAndFlush(product);
 
-        when(commentService.getComments(anyLong())).thenReturn(List.of(Comment.commentBuilder().id(1L).build()));
-        MvcResult mvcResult = mockMvc.perform(get("/api/users/{userId}", product.getId())
+
+
+        when(commentService.getComments(anyInt())).thenReturn(List.of(Comment.commentBuilder().id(1).build()));
+        MvcResult mvcResult = mockMvc.perform(get("/api/v1/comment/{productId}", 1)
                         .contentType("application/json"))
                 .andExpect(status().isOk())
                 .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String contentAsString = response.getContentAsString();
-        Comment comment = objectMapper.readValue(contentAsString, Comment.class);
-        assertThat(comment.getId()).isEqualTo(1);
-        verify(commentService, atLeastOnce()).getComments(anyLong());
+        Comment[] comments = objectMapper.readValue(contentAsString, Comment[].class);
+        assertThat(comments.length==1);
+        verify(commentService, atLeastOnce()).getComments(anyInt());
 
 
     }
 
     @Test
     public void updateCommentTest() throws Exception {
-        Long commentId = 1L;
+        int commentId = 1;
         CommentUpdateDTO commentUpdateDTO = new CommentUpdateDTO();
         commentUpdateDTO.setText("Updated comment");
 
         Comment comment = new Comment();
         comment.setId(commentId);
-        comment.setProductId(1L);
+        comment.setProductId(1);
         comment.setText("Test comment");
 
         when(commentService.update(any(CommentUpdateDTO.class), eq(commentId))).thenReturn(comment);
@@ -118,7 +114,7 @@ public class CommentControllerTest {
     @WithMockUser(username = "A", authorities = "A")
     public void deleteCommentTest() throws Exception {
 
-        Comment comment = Comment.commentBuilder().id(1L).build();
+        Comment comment = Comment.commentBuilder().id(1).build();
 
         when(commentService.delete(comment.getId())).thenReturn(comment);
 

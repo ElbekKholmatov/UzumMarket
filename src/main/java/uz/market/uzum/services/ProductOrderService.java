@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import uz.market.uzum.domains.product.ProductOrder;
 import uz.market.uzum.dtos.ProductOrderDTO;
 import uz.market.uzum.repositories.ProductOrderRepository;
-import uz.market.uzum.repositories.ProductRepository;
 
 @RequiredArgsConstructor
 @Service

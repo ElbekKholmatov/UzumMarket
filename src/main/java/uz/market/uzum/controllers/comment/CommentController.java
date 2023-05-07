@@ -25,16 +25,16 @@ public class CommentController {
     }
 
     @GetMapping("/{productId}")
-    public List<Comment> getCommentsByProductId(@PathVariable Long productId){
+    public List<Comment> getCommentsByProductId(@PathVariable Integer productId){
         return commentService.getComments(productId);
     }
 
     @PutMapping("/{id}")
-    public Comment update(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable Long id){
+    public Comment update(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable Integer id){
         return commentService.update(commentUpdateDTO,id);
     }
     @DeleteMapping("/{id}")
-    public Comment delete(@PathVariable Long id){
+    public Comment delete(@PathVariable Integer id){
         return commentService.delete(id);
     }
 

@@ -16,5 +16,5 @@ public class CommentUpdateDTO {
 
     private String text;
     private Byte rate;
-    private Long productId;
+    private Integer productId;
 }
