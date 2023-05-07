@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: uz.market.uzum.services.OrderServiceTest
+-------------------------------------------------------------------------------
+Tests run: 30, Failures: 0, Errors: 0, Skipped: 15, Time elapsed: 0.338 s - in uz.market.uzum.services.OrderServiceTest

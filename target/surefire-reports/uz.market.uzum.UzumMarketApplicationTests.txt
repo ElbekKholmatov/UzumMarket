@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: uz.market.uzum.UzumMarketApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.042 s - in uz.market.uzum.UzumMarketApplicationTests
