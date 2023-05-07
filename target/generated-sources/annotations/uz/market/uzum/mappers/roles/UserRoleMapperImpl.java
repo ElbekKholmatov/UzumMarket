@@ -6,7 +6,7 @@ import uz.market.uzum.dtos.roles.UserRoleCreateDTO;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-05T20:01:58+0500",
+    date = "2023-05-06T08:15:42+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.7 (Amazon.com Inc.)"
 )
 public class UserRoleMapperImpl implements UserRoleMapper {
