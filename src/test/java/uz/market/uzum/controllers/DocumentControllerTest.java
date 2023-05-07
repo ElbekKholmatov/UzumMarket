@@ -24,13 +24,15 @@ import uz.market.uzum.services.DocumentService;
 import uz.market.uzum.services.MediaService;
 
 class DocumentControllerTest {
-    /**
-     * Method under test: {@link DocumentController#uploadFile(MultipartFile)}
-     */
+    @Test
+    void testUploadFile() throws IOException {
+        DocumentRepository documentRepository = mock(DocumentRepository.class);
+        DocumentController documentController = new DocumentController(
+                new DocumentService(documentRepository, new MediaService()));
+        documentController
+                .uploadFile(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8"))));
+    }
 
-    /**
-     * Method under test: {@link DocumentController#uploadFile(MultipartFile)}
-     */
     @Test
     void testUploadFile2() throws IOException {
         DocumentRepository documentRepository = mock(DocumentRepository.class);
@@ -48,11 +50,9 @@ class DocumentControllerTest {
         verify(mediaService).upload(Mockito.<MultipartFile>any());
     }
 
-    /**
-     * Method under test: {@link DocumentController#uploadFile(MultipartFile)}
-     */
     @Test
     void testUploadFile3() throws IOException {
+
         DocumentService documentService = mock(DocumentService.class);
         when(documentService.saveDocument(Mockito.<MultipartFile>any())).thenReturn(new Document());
         DocumentController documentController = new DocumentController(documentService);
@@ -63,10 +63,47 @@ class DocumentControllerTest {
         assertEquals(200, actualUploadFileResult.getStatusCodeValue());
         verify(documentService).saveDocument(Mockito.<MultipartFile>any());
     }
+    @Test
+    void testUpdateFile() throws IOException {
+        DocumentRepository documentRepository = mock(DocumentRepository.class);
+        doNothing().when(documentRepository).deleteDocument(Mockito.<Long>any());
+        DocumentController documentController = new DocumentController(
+                new DocumentService(documentRepository, new MediaService()));
+        documentController.updateFile(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8"))),
+                1L);
+    }
+    @Test
+    void testUpdateFile2() throws IOException {
+        DocumentRepository documentRepository = mock(DocumentRepository.class);
+        when(documentRepository.save(Mockito.<Document>any())).thenReturn(new Document());
+        doNothing().when(documentRepository).deleteDocument(Mockito.<Long>any());
+        MediaService mediaService = mock(MediaService.class);
+        when(mediaService.upload(Mockito.<MultipartFile>any())).thenReturn("Upload");
+        DocumentController documentController = new DocumentController(
+                new DocumentService(documentRepository, mediaService));
+        ResponseEntity<Document> actualUpdateFileResult = documentController
+                .updateFile(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8"))), 1L);
+        assertTrue(actualUpdateFileResult.hasBody());
+        assertTrue(actualUpdateFileResult.getHeaders().isEmpty());
+        assertEquals(200, actualUpdateFileResult.getStatusCodeValue());
+        verify(documentRepository).save(Mockito.<Document>any());
+        verify(documentRepository).deleteDocument(Mockito.<Long>any());
+        verify(mediaService).upload(Mockito.<MultipartFile>any());
+    }
 
-    /**
-     * Method under test: {@link DocumentController#getDocument(Long)}
-     */
+    @Test
+    void testUpdateFile3() throws IOException {
+        DocumentService documentService = mock(DocumentService.class);
+        when(documentService.updateDocument(Mockito.<MultipartFile>any(), Mockito.<Long>any()))
+                .thenReturn(new Document());
+        DocumentController documentController = new DocumentController(documentService);
+        ResponseEntity<Document> actualUpdateFileResult = documentController
+                .updateFile(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8"))), 1L);
+        assertTrue(actualUpdateFileResult.hasBody());
+        assertTrue(actualUpdateFileResult.getHeaders().isEmpty());
+        assertEquals(200, actualUpdateFileResult.getStatusCodeValue());
+        verify(documentService).updateDocument(Mockito.<MultipartFile>any(), Mockito.<Long>any());
+    }
     @Test
     void testGetDocument() {
         DocumentRepository documentRepository = mock(DocumentRepository.class);
@@ -79,9 +116,6 @@ class DocumentControllerTest {
         verify(documentRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link DocumentController#getDocument(Long)}
-     */
     @Test
     void testGetDocument2() {
         DocumentRepository documentRepository = mock(DocumentRepository.class);
@@ -91,9 +125,6 @@ class DocumentControllerTest {
         verify(documentRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link DocumentController#getDocument(Long)}
-     */
     @Test
     void testGetDocument4() {
         DocumentService documentService = mock(DocumentService.class);
@@ -105,24 +136,18 @@ class DocumentControllerTest {
         verify(documentService).getDocument(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link DocumentController#delete(Long)}
-     */
     @Test
     void testDelete() {
         DocumentRepository documentRepository = mock(DocumentRepository.class);
-        doNothing().when(documentRepository).deleteById(Mockito.<Long>any());
+        doNothing().when(documentRepository).deleteDocument(Mockito.<Long>any());
         ResponseEntity<Boolean> actualDeleteResult = (new DocumentController(
                 new DocumentService(documentRepository, new MediaService()))).delete(1L);
         assertTrue(actualDeleteResult.getBody());
         assertEquals(200, actualDeleteResult.getStatusCodeValue());
         assertTrue(actualDeleteResult.getHeaders().isEmpty());
-        verify(documentRepository).deleteById(Mockito.<Long>any());
+        verify(documentRepository).deleteDocument(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link DocumentController#delete(Long)}
-     */
     @Test
     void testDelete3() {
         DocumentService documentService = mock(DocumentService.class);
