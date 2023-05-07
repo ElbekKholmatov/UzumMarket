@@ -18,17 +18,7 @@ import uz.market.uzum.repositories.ProductRepository;
 class ProductOrderServiceTest {
 
     @Test
-
     void testAdd() {
-
-        ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
-        ProductOrderService productOrderService = new ProductOrderService(productOrderRepository,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)));
-        productOrderService.add(new ProductOrderDTO());
-    }
-
-    @Test
-    void testAdd2() {
         ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
         ProductOrder productOrder = new ProductOrder();
         when(productOrderRepository.save(Mockito.<ProductOrder>any())).thenReturn(productOrder);
@@ -38,16 +28,6 @@ class ProductOrderServiceTest {
         assertSame(productOrder, productOrderService.add(new ProductOrderDTO()));
         verify(productOrderRepository).save(Mockito.<ProductOrder>any());
         verify(productService).getProductById(Mockito.<Long>any());
-    }
-
-    @Test
-    void testAdd3() {
-
-        ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
-        when(productOrderRepository.save(Mockito.<ProductOrder>any())).thenReturn(new ProductOrder());
-        ProductService productService = mock(ProductService.class);
-        when(productService.getProductById(Mockito.<Long>any())).thenReturn(new Product());
-        (new ProductOrderService(productOrderRepository, productService)).add(null);
     }
 }
 

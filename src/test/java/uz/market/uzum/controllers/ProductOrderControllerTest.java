@@ -23,21 +23,6 @@ import uz.market.uzum.services.user.UserService;
 
 class ProductOrderControllerTest {
     @Test
-    @Disabled("TODO: Complete this test")
-    void testGetBasket() {
-
-        ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
-        ProductOrderService productOrderService = new ProductOrderService(productOrderRepository,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)));
-
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        UserService userService = new UserService(mock(UserRepository.class));
-        (new ProductOrderController(productOrderService,
-                new BasketService(basketRepository, userService,
-                        new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                        mock(ProductOrderRepository.class)))).getBasket();
-    }
-    @Test
     void testGetBasket2() {
 
         BasketService basketService = mock(BasketService.class);
