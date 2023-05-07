@@ -1,35 +1,23 @@
 package uz.market.uzum.services;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Cache;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import uz.market.uzum.configuration.security.SessionUser;
 import uz.market.uzum.domains.product.Order;
 import uz.market.uzum.domains.product.ProductOrder;
-import uz.market.uzum.dtos.AddToOrderDTO;
-import uz.market.uzum.enums.OrderStatus;
-import uz.market.uzum.domains.product.Order;
 import uz.market.uzum.dtos.order.AddToOrderDTO;
 import uz.market.uzum.dtos.order.PayOrderDTO;
 import uz.market.uzum.enums.OrderStatus;
-import uz.market.uzum.enums.Payment;
 import uz.market.uzum.mappers.product.OrderMapper;
 import uz.market.uzum.repositories.OrderRepository;
 import uz.market.uzum.repositories.ProductOrderRepository;
-import uz.market.uzum.services.user.UserService;
-
-import java.util.Collection;
-
 import uz.market.uzum.repositories.order.OrderPaginationRepository;
 
-import java.util.List;
+import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
@@ -73,35 +61,19 @@ public class OrderService {
         return orderRepository.findAllOnPaying(pageable);
     }
 
-    public Page<Order> getAllOrders(Pageable pageable) {
-       return orderPaginationRepository.findAll(pageable);
+    @CachePut(value = "orders", key = "#id")
+    public Order updateOrderCancel(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus(OrderStatus.CANCELED);
+        return orderRepository.save(order);
 
     }
 
-    public Order payForOrder(@NonNull PayOrderDTO payOrderDTO){
-        Order orderFound = orderRepository.findById(payOrderDTO.orderId())
-                .orElseThrow(() -> new RuntimeException("Order not found"));
-        Double prices= orderFound.getProducts().stream()
-                .map(productOrder -> productOrder.getProduct().getPrice())
-                .reduce(0.0,Double::sum);
-        if(orderFound.getPayment().equals(Payment.INSTALLMENT)){
-            return payForInstallment(orderFound,prices, payOrderDTO);
-        }
-        else return payForCard(orderFound,prices,payOrderDTO);
-
-
-    }
-
-    public Order payForCard(Order order, Double prices, PayOrderDTO payOrderDTO) {
-
-
-        if(prices-payOrderDTO.amount()<=0){
-            order.setStatus(OrderStatus.COMPLETED);
-            return orderRepository.save(order);
-        }
-        else{
-            throw new RuntimeException("Sum is not enough to complete order");
-        }
+    @CachePut(value = "orders", key = "#id")
+    public Order updateOrderStatus(Long id, OrderStatus status) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus(status);
+        return orderRepository.save(order);
     }
 
     public Order payForInstallment(Order order, Double prices,PayOrderDTO payOrderDTO) {

@@ -21,15 +21,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import uz.market.uzum.configuration.security.SessionUser;
 import uz.market.uzum.domains.product.Order;
-import uz.market.uzum.dtos.AddToOrderDTO;
+import uz.market.uzum.dtos.order.AddToOrderDTO;
 import uz.market.uzum.enums.OrderStatus;
 import uz.market.uzum.enums.Payment;
+import uz.market.uzum.mappers.product.OrderMapperImpl;
 import uz.market.uzum.repositories.OrderRepository;
 import uz.market.uzum.repositories.ProductOrderRepository;
+import uz.market.uzum.repositories.order.OrderPaginationRepository;
 import uz.market.uzum.repositories.user.UserRepository;
 import uz.market.uzum.services.OrderService;
 
 class OrderControllerTest {
+    /**
+     * Method under test: {@link OrderController#addToOrder(AddToOrderDTO)}
+     */
+
 
     /**
      * Method under test: {@link OrderController#addToOrder(AddToOrderDTO)}
@@ -50,8 +56,8 @@ class OrderControllerTest {
         when(sessionUser.id()).thenReturn(1L);
         ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
         when(productOrderRepository.findALLByIds(Mockito.<Collection<Long>>any())).thenReturn(new ArrayList<>());
-        OrderController orderController = new OrderController(
-                new OrderService(orderRepository, sessionUser, productOrderRepository));
+        OrderController orderController = new OrderController(new OrderService(orderRepository, sessionUser,
+                productOrderRepository, new OrderMapperImpl(), mock(OrderPaginationRepository.class)));
         ResponseEntity<Order> actualAddToOrderResult = orderController
                 .addToOrder(new AddToOrderDTO(new ArrayList<>(), Payment.CASH));
         assertTrue(actualAddToOrderResult.hasBody());
@@ -62,6 +68,29 @@ class OrderControllerTest {
         verify(productOrderRepository).findALLByIds(Mockito.<Collection<Long>>any());
     }
 
+    /**
+     * Method under test: {@link OrderController#addToOrder(AddToOrderDTO)}
+     */
+    @Test
+    void testAddToOrder3() {
+        //   Diffblue Cover was unable to write a Spring test,
+        //   so wrote a non-Spring test instead.
+        //   Reason: R013 No inputs found that don't throw a trivial exception.
+        //   Diffblue Cover tried to run the arrange/act section, but the method under
+        //   test threw
+        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
+        //   See https://diff.blue/R013 to resolve this issue.
+
+        OrderService orderService = mock(OrderService.class);
+        when(orderService.addToOrder(Mockito.<AddToOrderDTO>any())).thenReturn(new Order());
+        OrderController orderController = new OrderController(orderService);
+        ResponseEntity<Order> actualAddToOrderResult = orderController
+                .addToOrder(new AddToOrderDTO(new ArrayList<>(), Payment.CASH));
+        assertTrue(actualAddToOrderResult.hasBody());
+        assertTrue(actualAddToOrderResult.getHeaders().isEmpty());
+        assertEquals(200, actualAddToOrderResult.getStatusCodeValue());
+        verify(orderService).addToOrder(Mockito.<AddToOrderDTO>any());
+    }
 
     /**
      * Method under test: {@link OrderController#getAllNewOrders(Integer, Integer)}
@@ -79,13 +108,37 @@ class OrderControllerTest {
         OrderRepository orderRepository = mock(OrderRepository.class);
         PageImpl<Order> pageImpl = new PageImpl<>(new ArrayList<>());
         when(orderRepository.findAllByStatus(Mockito.<Pageable>any())).thenReturn(pageImpl);
-        Page<Order> actualAllNewOrders = (new OrderController(new OrderService(orderRepository,
-                new SessionUser(mock(UserRepository.class)), mock(ProductOrderRepository.class)))).getAllNewOrders(1, 3);
+        SessionUser sessionUser = new SessionUser(mock(UserRepository.class));
+        ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
+        Page<Order> actualAllNewOrders = (new OrderController(new OrderService(orderRepository, sessionUser,
+                productOrderRepository, new OrderMapperImpl(), mock(OrderPaginationRepository.class)))).getAllNewOrders(1, 3);
         assertSame(pageImpl, actualAllNewOrders);
         assertTrue(actualAllNewOrders.toList().isEmpty());
         verify(orderRepository).findAllByStatus(Mockito.<Pageable>any());
     }
 
+
+    /**
+     * Method under test: {@link OrderController#getAllNewOrders(Integer, Integer)}
+     */
+    @Test
+    void testGetAllNewOrders3() {
+        //   Diffblue Cover was unable to write a Spring test,
+        //   so wrote a non-Spring test instead.
+        //   Reason: R013 No inputs found that don't throw a trivial exception.
+        //   Diffblue Cover tried to run the arrange/act section, but the method under
+        //   test threw
+        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
+        //   See https://diff.blue/R013 to resolve this issue.
+
+        OrderService orderService = mock(OrderService.class);
+        PageImpl<Order> pageImpl = new PageImpl<>(new ArrayList<>());
+        when(orderService.getAllNewOrders(Mockito.<Pageable>any())).thenReturn(pageImpl);
+        Page<Order> actualAllNewOrders = (new OrderController(orderService)).getAllNewOrders(1, 3);
+        assertSame(pageImpl, actualAllNewOrders);
+        assertTrue(actualAllNewOrders.toList().isEmpty());
+        verify(orderService).getAllNewOrders(Mockito.<Pageable>any());
+    }
 
 
     /**
@@ -104,13 +157,14 @@ class OrderControllerTest {
         OrderRepository orderRepository = mock(OrderRepository.class);
         PageImpl<Order> pageImpl = new PageImpl<>(new ArrayList<>());
         when(orderRepository.findAllOnPaying(Mockito.<Pageable>any())).thenReturn(pageImpl);
-        Page<Order> actualAllOrders = (new OrderController(new OrderService(orderRepository,
-                new SessionUser(mock(UserRepository.class)), mock(ProductOrderRepository.class)))).getAllOrders(1, 3);
+        SessionUser sessionUser = new SessionUser(mock(UserRepository.class));
+        ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
+        Page<Order> actualAllOrders = (new OrderController(new OrderService(orderRepository, sessionUser,
+                productOrderRepository, new OrderMapperImpl(), mock(OrderPaginationRepository.class)))).getAllOrders(1, 3);
         assertSame(pageImpl, actualAllOrders);
         assertTrue(actualAllOrders.toList().isEmpty());
         verify(orderRepository).findAllOnPaying(Mockito.<Pageable>any());
     }
-
 
 
     /**
@@ -135,7 +189,8 @@ class OrderControllerTest {
         verify(orderService).getAllOrders(Mockito.<Pageable>any());
     }
 
-        /**
+
+    /**
      * Method under test: {@link OrderController#updateOrderCancel(Long)}
      */
     @Test
@@ -151,8 +206,11 @@ class OrderControllerTest {
         OrderRepository orderRepository = mock(OrderRepository.class);
         when(orderRepository.save(Mockito.<Order>any())).thenReturn(new Order());
         when(orderRepository.findById(Mockito.<Long>any())).thenReturn(Optional.of(new Order()));
+        SessionUser sessionUser = new SessionUser(mock(UserRepository.class));
+        ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
         ResponseEntity<Order> actualUpdateOrderCancelResult = (new OrderController(new OrderService(orderRepository,
-                new SessionUser(mock(UserRepository.class)), mock(ProductOrderRepository.class)))).updateOrderCancel(1L);
+                sessionUser, productOrderRepository, new OrderMapperImpl(), mock(OrderPaginationRepository.class))))
+                .updateOrderCancel(1L);
         assertTrue(actualUpdateOrderCancelResult.hasBody());
         assertTrue(actualUpdateOrderCancelResult.getHeaders().isEmpty());
         assertEquals(200, actualUpdateOrderCancelResult.getStatusCodeValue());
@@ -179,8 +237,11 @@ class OrderControllerTest {
         OrderRepository orderRepository = mock(OrderRepository.class);
         when(orderRepository.save(Mockito.<Order>any())).thenReturn(new Order());
         when(orderRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        SessionUser sessionUser = new SessionUser(mock(UserRepository.class));
+        ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
         ResponseEntity<Order> actualUpdateOrderCancelResult = (new OrderController(new OrderService(orderRepository,
-                new SessionUser(mock(UserRepository.class)), mock(ProductOrderRepository.class)))).updateOrderCancel(1L);
+                sessionUser, productOrderRepository, new OrderMapperImpl(), mock(OrderPaginationRepository.class))))
+                .updateOrderCancel(1L);
         assertTrue(actualUpdateOrderCancelResult.hasBody());
         assertTrue(actualUpdateOrderCancelResult.getHeaders().isEmpty());
         assertEquals(200, actualUpdateOrderCancelResult.getStatusCodeValue());
@@ -190,20 +251,11 @@ class OrderControllerTest {
     }
 
 
-
     /**
      * Method under test: {@link OrderController#updateOrderCancel(Long)}
      */
     @Test
     void testUpdateOrderCancel4() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Order order = mock(Order.class);
         doNothing().when(order).setStatus(Mockito.<OrderStatus>any());
         Optional.of(order);
@@ -221,20 +273,14 @@ class OrderControllerTest {
      */
     @Test
     void testUpdateOrderStatus() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
-        //   See https://diff.blue/R013 to resolve this issue.
-
         OrderRepository orderRepository = mock(OrderRepository.class);
         when(orderRepository.save(Mockito.<Order>any())).thenReturn(new Order());
         when(orderRepository.findById(Mockito.<Long>any())).thenReturn(Optional.of(new Order()));
+        SessionUser sessionUser = new SessionUser(mock(UserRepository.class));
+        ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
         ResponseEntity<Order> actualUpdateOrderStatusResult = (new OrderController(new OrderService(orderRepository,
-                new SessionUser(mock(UserRepository.class)), mock(ProductOrderRepository.class)))).updateOrderStatus(1L,
-                OrderStatus.NEW);
+                sessionUser, productOrderRepository, new OrderMapperImpl(), mock(OrderPaginationRepository.class))))
+                .updateOrderStatus(1L, OrderStatus.NEW);
         assertTrue(actualUpdateOrderStatusResult.hasBody());
         assertTrue(actualUpdateOrderStatusResult.getHeaders().isEmpty());
         assertEquals(200, actualUpdateOrderStatusResult.getStatusCodeValue());
@@ -247,23 +293,17 @@ class OrderControllerTest {
      */
     @Test
     void testUpdateOrderStatus2() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Order order = mock(Order.class);
         doNothing().when(order).setStatus(Mockito.<OrderStatus>any());
         Optional<Order> ofResult = Optional.of(order);
         OrderRepository orderRepository = mock(OrderRepository.class);
         when(orderRepository.save(Mockito.<Order>any())).thenReturn(new Order());
         when(orderRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        SessionUser sessionUser = new SessionUser(mock(UserRepository.class));
+        ProductOrderRepository productOrderRepository = mock(ProductOrderRepository.class);
         ResponseEntity<Order> actualUpdateOrderStatusResult = (new OrderController(new OrderService(orderRepository,
-                new SessionUser(mock(UserRepository.class)), mock(ProductOrderRepository.class)))).updateOrderStatus(1L,
-                OrderStatus.NEW);
+                sessionUser, productOrderRepository, new OrderMapperImpl(), mock(OrderPaginationRepository.class))))
+                .updateOrderStatus(1L, OrderStatus.NEW);
         assertTrue(actualUpdateOrderStatusResult.hasBody());
         assertTrue(actualUpdateOrderStatusResult.getHeaders().isEmpty());
         assertEquals(200, actualUpdateOrderStatusResult.getStatusCodeValue());
@@ -273,20 +313,11 @@ class OrderControllerTest {
     }
 
 
-
     /**
      * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
      */
     @Test
     void testUpdateOrderStatus4() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Order order = mock(Order.class);
         doNothing().when(order).setStatus(Mockito.<OrderStatus>any());
         Optional.of(order);
@@ -305,14 +336,6 @@ class OrderControllerTest {
      */
     @Test
     void testUpdateOrderStatus5() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Order order = mock(Order.class);
         doNothing().when(order).setStatus(Mockito.<OrderStatus>any());
         Optional.of(order);
@@ -331,14 +354,6 @@ class OrderControllerTest {
      */
     @Test
     void testUpdateOrderStatus6() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Order order = mock(Order.class);
         doNothing().when(order).setStatus(Mockito.<OrderStatus>any());
         Optional.of(order);
@@ -357,14 +372,6 @@ class OrderControllerTest {
      */
     @Test
     void testUpdateOrderStatus7() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Order order = mock(Order.class);
         doNothing().when(order).setStatus(Mockito.<OrderStatus>any());
         Optional.of(order);
@@ -383,14 +390,6 @@ class OrderControllerTest {
      */
     @Test
     void testUpdateOrderStatus8() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Order order = mock(Order.class);
         doNothing().when(order).setStatus(Mockito.<OrderStatus>any());
         Optional.of(order);
@@ -409,14 +408,6 @@ class OrderControllerTest {
      */
     @Test
     void testUpdateOrderStatus9() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Order order = mock(Order.class);
         doNothing().when(order).setStatus(Mockito.<OrderStatus>any());
         Optional.of(order);
@@ -435,14 +426,6 @@ class OrderControllerTest {
      */
     @Test
     void testUpdateOrderStatus10() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "bean" is null
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Order order = mock(Order.class);
         doNothing().when(order).setStatus(Mockito.<OrderStatus>any());
         Optional.of(order);

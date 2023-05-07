@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import uz.market.uzum.domains.product.Order;
-import uz.market.uzum.dtos.AddToOrderDTO;
+import uz.market.uzum.dtos.order.AddToOrderDTO;
 import uz.market.uzum.enums.OrderStatus;
 import uz.market.uzum.services.OrderService;
 
