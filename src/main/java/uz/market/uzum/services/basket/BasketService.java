@@ -33,7 +33,7 @@ public class BasketService {
     }
 
     public Basket getBasket() {
-        String phoneNumber=String.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        String phoneNumber = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return getBasketByPhoneNumber(phoneNumber);
     }
 
@@ -49,9 +49,8 @@ public class BasketService {
             if (product.getProduct().getName().equals(productOrder.getProduct().getName())) {
                 products.remove(product);
                 products.add(productOrder);
-                basket.setProduct(products);
-                productOrderRepository.delete(product);
                 basketRepository.save(basket);
+                productOrderRepository.delete(product);
                 return product;
             }
         }
@@ -63,8 +62,8 @@ public class BasketService {
 
 
     public Basket getBasketByPhoneNumber(String phoneNumber) {
-        User user=userService.getUserByPhoneNumber(phoneNumber).orElseThrow(()->new ItemNotFoundException("User not found"));
-        return basketRepository.findByUserId(user.getId()).orElseThrow(()->new ItemNotFoundException("Basket not found"));
+        User user = userService.getUserByPhoneNumber(phoneNumber).orElseThrow(() -> new ItemNotFoundException("User not found"));
+        return basketRepository.findByUserId(user.getId()).orElseThrow(() -> new ItemNotFoundException("Basket not found"));
     }
 
     public ProductOrder removeProduct(Long productId, String phoneNumber) {
