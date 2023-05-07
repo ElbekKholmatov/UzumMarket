@@ -2,7 +2,6 @@ package uz.market.uzum.dtos.auth;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import org.springdoc.core.annotations.ParameterObject;
 
 @ParameterObject
