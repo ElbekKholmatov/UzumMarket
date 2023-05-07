@@ -1,4 +1,4 @@
-package uz.market.uzum.dtos;
+package uz.market.uzum.dtos.order;
 
 
 import org.springdoc.core.annotations.ParameterObject;
