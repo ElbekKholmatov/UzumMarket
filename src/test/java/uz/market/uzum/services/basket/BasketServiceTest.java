@@ -15,10 +15,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uz.market.uzum.domains.product.Basket;
 import uz.market.uzum.domains.product.Product;
+import uz.market.uzum.domains.product.ProductOrder;
 import uz.market.uzum.domains.user.User;
 import uz.market.uzum.dtos.ProductOrderDTO;
 import uz.market.uzum.exceptions.ItemNotFoundException;
@@ -33,6 +35,7 @@ import uz.market.uzum.services.user.UserService;
 
 @ContextConfiguration(classes = {BasketService.class})
 @ExtendWith(SpringExtension.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class BasketServiceTest {
     @MockBean
     private BasketRepository basketRepository;
@@ -50,191 +53,16 @@ class BasketServiceTest {
     private UserService userService;
 
     @Test
-    @Disabled("TODO: Complete this test")
-    void testGetBasket() {
-
-        basketService.getBasket();
+    void addProductTest() {
+        Basket basket = new Basket();
+        basket.setId(1L);
+        basket.setProduct(new ArrayList<ProductOrder>());
+        when(this.basketRepository.save((Basket) Mockito.any())).thenReturn(basket);
+        when(this.productService.getProductById((Long) Mockito.any())).thenReturn(new Product());
+        when(this.basketRepository.findById((Long) Mockito.any())).thenReturn(Optional.<Basket>empty());
+        assertThrows(ItemNotFoundException.class, () -> this.basketService.addProduct(new ProductOrderDTO(), "6625550144"));
     }
 
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAddProduct() {
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        UserService userService = new UserService(mock(UserRepository.class));
-        (new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class))).addProduct(null, null);
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAddProduct2() {
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        UserService userService = new UserService(mock(UserRepository.class));
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        basketService.addProduct(new ProductOrderDTO(), null);
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAddProduct3() {
-
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(new Basket()));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(new User());
-        UserService userService = new UserService(userRepository);
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        basketService.addProduct(new ProductOrderDTO(), "6625550144");
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAddProduct4() {
-
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenThrow(new NullPointerException("Basket not found"));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(new User());
-        UserService userService = new UserService(userRepository);
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        basketService.addProduct(new ProductOrderDTO(), "6625550144");
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAddProduct5() {
-
-        Basket basket = mock(Basket.class);
-        when(basket.getProduct()).thenThrow(new NullPointerException("foo"));
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(basket));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(new User());
-        UserService userService = new UserService(userRepository);
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        basketService.addProduct(new ProductOrderDTO(), "6625550144");
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAddProduct6() {
-
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(null);
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(new User());
-        UserService userService = new UserService(userRepository);
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        basketService.addProduct(new ProductOrderDTO(), "6625550144");
-    }
-
-    @Test
-    void testAddProduct7() {
-
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.empty());
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(new User());
-        UserService userService = new UserService(userRepository);
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        assertThrows(ItemNotFoundException.class, () -> basketService.addProduct(new ProductOrderDTO(), "6625550144"));
-        verify(basketRepository).findByUserId(Mockito.<Long>any());
-        verify(userRepository).findByEmail(Mockito.<String>any());
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAddProduct8() {
-        Basket basket = mock(Basket.class);
-        when(basket.getProduct()).thenThrow(new NullPointerException("foo"));
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(basket));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(null);
-        UserService userService = new UserService(userRepository);
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        basketService.addProduct(new ProductOrderDTO(), "6625550144");
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAddProduct9() {
-
-        Basket basket = mock(Basket.class);
-        when(basket.getProduct()).thenThrow(new NullPointerException("foo"));
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(basket));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(mock(User.class));
-        UserService userService = new UserService(userRepository);
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        basketService.addProduct(new ProductOrderDTO(), "6625550144");
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAddProduct10() {
-
-        Basket basket = mock(Basket.class);
-        when(basket.getProduct()).thenThrow(new NullPointerException("foo"));
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(basket));
-        UserService userService = mock(UserService.class);
-        when(userService.getUserByPhoneNumber(Mockito.<String>any())).thenReturn(Optional.of(new User()));
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        basketService.addProduct(new ProductOrderDTO(), "6625550144");
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAddProduct11() {
-
-        Basket basket = mock(Basket.class);
-        when(basket.getProduct()).thenThrow(new NullPointerException("foo"));
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(basket));
-        UserService userService = mock(UserService.class);
-        when(userService.getUserByPhoneNumber(Mockito.<String>any())).thenReturn(null);
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        basketService.addProduct(new ProductOrderDTO(), "6625550144");
-    }
-
-    @Test
-    void testAddProduct12() {
-
-        Basket basket = mock(Basket.class);
-        when(basket.getProduct()).thenThrow(new NullPointerException("foo"));
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(basket));
-        UserService userService = mock(UserService.class);
-        when(userService.getUserByPhoneNumber(Mockito.<String>any())).thenReturn(Optional.empty());
-        BasketService basketService = new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class));
-        assertThrows(ItemNotFoundException.class, () -> basketService.addProduct(new ProductOrderDTO(), "6625550144"));
-        verify(userService).getUserByPhoneNumber(Mockito.<String>any());
-    }
 
     @Test
     void testGetBasketByPhoneNumber() {
@@ -254,20 +82,6 @@ class BasketServiceTest {
     }
 
     @Test
-    @Disabled("TODO: Complete this test")
-    void testGetBasketByPhoneNumber2() {
-
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenThrow(new NullPointerException("Basket not found"));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(new User());
-        UserService userService = new UserService(userRepository);
-        (new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class))).getBasketByPhoneNumber("jane.doe@example.org");
-    }
-
-    @Test
     void testGetBasketByPhoneNumber3() {
 
         BasketRepository basketRepository = mock(BasketRepository.class);
@@ -282,36 +96,6 @@ class BasketServiceTest {
         verify(basketRepository).findByUserId(Mockito.<Long>any());
         verify(userRepository).findByEmail(Mockito.<String>any());
     }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testGetBasketByPhoneNumber4() {
-
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(new Basket()));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(null);
-        UserService userService = new UserService(userRepository);
-        (new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class))).getBasketByPhoneNumber("jane.doe@example.org");
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testGetBasketByPhoneNumber5() {
-
-
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(new Basket()));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(mock(User.class));
-        UserService userService = new UserService(userRepository);
-        (new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), mock(ProductRepository.class)),
-                mock(ProductOrderRepository.class))).getBasketByPhoneNumber("jane.doe@example.org");
-    }
-
 
     @Test
     void testGetBasketByPhoneNumber6() {
@@ -341,36 +125,9 @@ class BasketServiceTest {
         verify(userService).getUserByPhoneNumber(Mockito.<String>any());
     }
 
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testRemoveProduct() {
 
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(new Basket()));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(new User());
-        UserService userService = new UserService(userRepository);
-        ProductRepository productRepository = mock(ProductRepository.class);
-        when(productRepository.findById(Mockito.<Integer>any())).thenReturn(Optional.of(new Product()));
-        (new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), productRepository),
-                mock(ProductOrderRepository.class))).removeProduct(1L, "6625550144");
-    }
 
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testRemoveProduct2() {
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(new Basket()));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(new User());
-        UserService userService = new UserService(userRepository);
-        ProductRepository productRepository = mock(ProductRepository.class);
-        when(productRepository.findById(Mockito.<Integer>any())).thenThrow(new NullPointerException("Product not found"));
-        (new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), productRepository),
-                mock(ProductOrderRepository.class))).removeProduct(1L, "6625550144");
-    }
+
 
     @Test
     void testRemoveProduct3() {
@@ -393,23 +150,6 @@ class BasketServiceTest {
         verify(productRepository).findById(Mockito.<Integer>any());
     }
     @Test
-    @Disabled("TODO: Complete this test")
-    void testRemoveProduct4() {
-
-        Basket basket = mock(Basket.class);
-        when(basket.getProduct()).thenThrow(new NullPointerException("foo"));
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(basket));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(new User());
-        UserService userService = new UserService(userRepository);
-        ProductRepository productRepository = mock(ProductRepository.class);
-        when(productRepository.findById(Mockito.<Integer>any())).thenReturn(Optional.of(new Product()));
-        (new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), productRepository),
-                mock(ProductOrderRepository.class))).removeProduct(1L, "6625550144");
-    }
-    @Test
     void testRemoveProduct5() {
 
         BasketRepository basketRepository = mock(BasketRepository.class);
@@ -425,57 +165,6 @@ class BasketServiceTest {
                         mock(ProductOrderRepository.class))).removeProduct(1L, "6625550144"));
         verify(basketRepository).findByUserId(Mockito.<Long>any());
         verify(userRepository).findByEmail(Mockito.<String>any());
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testRemoveProduct6() {
-
-        Basket basket = mock(Basket.class);
-        when(basket.getProduct()).thenThrow(new NullPointerException("foo"));
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(basket));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(null);
-        UserService userService = new UserService(userRepository);
-        ProductRepository productRepository = mock(ProductRepository.class);
-        when(productRepository.findById(Mockito.<Integer>any())).thenReturn(Optional.of(new Product()));
-        (new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), productRepository),
-                mock(ProductOrderRepository.class))).removeProduct(1L, "6625550144");
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testRemoveProduct7() {
-        Basket basket = mock(Basket.class);
-        when(basket.getProduct()).thenThrow(new NullPointerException("foo"));
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(basket));
-        UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(mock(User.class));
-        UserService userService = new UserService(userRepository);
-        ProductRepository productRepository = mock(ProductRepository.class);
-        when(productRepository.findById(Mockito.<Integer>any())).thenReturn(Optional.of(new Product()));
-        (new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), productRepository),
-                mock(ProductOrderRepository.class))).removeProduct(1L, "6625550144");
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testRemoveProduct8() {
-        Basket basket = mock(Basket.class);
-        when(basket.getProduct()).thenThrow(new NullPointerException("foo"));
-        BasketRepository basketRepository = mock(BasketRepository.class);
-        when(basketRepository.findByUserId(Mockito.<Long>any())).thenReturn(Optional.of(basket));
-        UserService userService = mock(UserService.class);
-        when(userService.getUserByPhoneNumber(Mockito.<String>any())).thenReturn(Optional.of(new User()));
-        ProductRepository productRepository = mock(ProductRepository.class);
-        when(productRepository.findById(Mockito.<Integer>any())).thenReturn(Optional.of(new Product()));
-        (new BasketService(basketRepository, userService,
-                new ProductService(new CategoryService(mock(CategoryRepository.class)), productRepository),
-                mock(ProductOrderRepository.class))).removeProduct(1L, "6625550144");
     }
 
 }
