@@ -61,11 +61,11 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<UserRole> userRoles = Objects.requireNonNullElse(getRoles(), Collections.<UserRole>emptySet());
+        Collection<UserRole> userRoles = Objects.requireNonNullElse(getRoles(), Collections.emptySet());
         ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
         userRoles.forEach(userRole -> {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole.getCode()));
-            Collection<UserPermission> permissions = Objects.requireNonNullElse(userRole.getAuthPermissions(), Collections.<UserPermission>emptySet());
+            Collection<UserPermission> permissions = Objects.requireNonNullElse(userRole.getAuthPermissions(), Collections.emptySet());
             permissions.forEach(authPermission -> authorities.add(new SimpleGrantedAuthority(authPermission.getCode())));
         });
         return authorities;
