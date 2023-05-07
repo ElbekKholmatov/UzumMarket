@@ -61,8 +61,8 @@ public class BasketService {
     }
 
 
-    public Basket getBasketByPhoneNumber(String phoneNumber) {
-        User user = userService.getUserByPhoneNumber(phoneNumber).orElseThrow(() -> new ItemNotFoundException("User not found"));
+    public Basket getBasketByPhoneNumber(String email) {
+        User user = userService.getUserByPhoneNumber(email).orElseThrow(() -> new ItemNotFoundException("User not found"));
         return basketRepository.findByUserId(user.getId()).orElseThrow(() -> new ItemNotFoundException("Basket not found"));
     }
 

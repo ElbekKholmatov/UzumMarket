@@ -14,7 +14,6 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
 public class Basket extends Auditable {
 
     @Id

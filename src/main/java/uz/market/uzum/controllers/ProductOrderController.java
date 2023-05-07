@@ -5,10 +5,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import uz.market.uzum.domains.product.Basket;
 import uz.market.uzum.domains.product.ProductOrder;
 import uz.market.uzum.dtos.ProductOrderDTO;
 import uz.market.uzum.services.ProductOrderService;
@@ -36,6 +34,13 @@ public class ProductOrderController {
 //        ProductOrder pOrder=productOrderService.add(dto);
         ProductOrder pOrder=basketService.removeProduct(productId, phoneNumber);
         return ResponseEntity.ok().body(pOrder);
+    }
+
+
+    @GetMapping("/getBasket")
+    public ResponseEntity<Basket> getBasket() {
+        Basket basket=basketService.getBasket();
+        return ResponseEntity.ok().body(basket);
     }
 
 

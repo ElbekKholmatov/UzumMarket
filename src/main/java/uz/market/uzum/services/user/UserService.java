@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(userId);
     }
 
-    public Optional<User> getUserByPhoneNumber(String phoneNumber) {
-        return Optional.of(userRepository.findByPhoneNumber(phoneNumber));
+    public Optional<User> getUserByPhoneNumber(String email) {
+        return Optional.of(userRepository.findByEmail(email));
     }
 }
