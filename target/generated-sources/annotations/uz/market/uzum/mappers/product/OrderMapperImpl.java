@@ -2,16 +2,17 @@ package uz.market.uzum.mappers.product;
 
 import java.util.Collection;
 import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
 import uz.market.uzum.domains.product.Order;
-import uz.market.uzum.domains.product.ProductOrder;
 import uz.market.uzum.dtos.order.AddToOrderDTO;
 import uz.market.uzum.enums.Payment;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-06T09:25:31+0500",
+    date = "2023-05-07T10:58:47+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.7 (Amazon.com Inc.)"
 )
+@Component
 public class OrderMapperImpl implements OrderMapper {
 
     @Override
@@ -20,12 +21,11 @@ public class OrderMapperImpl implements OrderMapper {
             return null;
         }
 
-        Order order = new Order();
+        Order.OrderBuilder order = Order.childBuilder();
 
-        order.setUserId( addToOrderDTO.userId() );
-        order.setPayment( addToOrderDTO.payment() );
+        order.payment( addToOrderDTO.payment() );
 
-        return order;
+        return order.build();
     }
 
     @Override
@@ -34,15 +34,13 @@ public class OrderMapperImpl implements OrderMapper {
             return null;
         }
 
-        Long userId = null;
         Payment payment = null;
 
-        userId = order.getUserId();
         payment = order.getPayment();
 
-        Collection<ProductOrder> productIds = null;
+        Collection<Long> productIds = null;
 
-        AddToOrderDTO addToOrderDTO = new AddToOrderDTO( productIds, userId, payment );
+        AddToOrderDTO addToOrderDTO = new AddToOrderDTO( productIds, payment );
 
         return addToOrderDTO;
     }

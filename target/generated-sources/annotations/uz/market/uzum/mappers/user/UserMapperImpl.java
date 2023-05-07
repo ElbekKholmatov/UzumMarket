@@ -7,7 +7,7 @@ import uz.market.uzum.dtos.auth.UserCreateDTO;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-06T09:25:31+0500",
+    date = "2023-05-07T10:58:47+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.7 (Amazon.com Inc.)"
 )
 @Component
@@ -22,16 +22,14 @@ public class UserMapperImpl implements UserMapper {
         String password = null;
         String firstName = null;
         String lastName = null;
-        String phoneNumber = null;
         String email = null;
 
         password = user.getPassword();
         firstName = user.getFirstName();
         lastName = user.getLastName();
-        phoneNumber = user.getPhoneNumber();
         email = user.getEmail();
 
-        UserCreateDTO userCreateDTO = new UserCreateDTO( password, firstName, lastName, phoneNumber, email );
+        UserCreateDTO userCreateDTO = new UserCreateDTO( password, firstName, lastName, email );
 
         return userCreateDTO;
     }
@@ -48,7 +46,6 @@ public class UserMapperImpl implements UserMapper {
         user.password( userDto.password() );
         user.firstName( userDto.firstName() );
         user.lastName( userDto.lastName() );
-        user.phoneNumber( userDto.phoneNumber() );
 
         return user.build();
     }
