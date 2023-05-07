@@ -3,10 +3,10 @@ package uz.market.uzum.services;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import uz.market.uzum.domains.Destination;
+import uz.market.uzum.dtos.destination.DestinationUpdateDTO;
 import uz.market.uzum.repositories.DestinationRepository;
 
 import java.io.BufferedReader;
@@ -87,14 +87,18 @@ public class DestinationService {
         return destination.get();
     }
 
-    public Optional<Destination> updateDestination(Long id, Destination destination) {
-        Optional<Destination> existingUser = destinationRepository.findById(id);
-        if (existingUser.isPresent()) {
-            destination.setId(id);
-            return Optional.of(destinationRepository.save(destination));
-        } else {
-            return Optional.empty();
-        }
+    public Destination updateDestination(Long id, DestinationUpdateDTO destinationUpdateDTO) {
+        Destination destination = destinationRepository.findById(id).get();
+        destination.setCountry(destinationUpdateDTO.getCountry());
+        destination.setCountry_code(destinationUpdateDTO.getCountry_code());
+        destination.setResidential(destinationUpdateDTO.getResidential());
+        destination.setRoad(destinationUpdateDTO.getRoad());
+        destination.setCity(destinationUpdateDTO.getCity());
+        destination.setAmenity(destinationUpdateDTO.getAmenity());
+        destination.setCounty(destinationUpdateDTO.getCounty());
+        destination.setLatitude(destinationUpdateDTO.getLatitude());
+        destination.setLongitude(destinationUpdateDTO.getLongitude());
+        return destinationRepository.save(destination);
     }
 
     public boolean deleteDestination(Long id) {

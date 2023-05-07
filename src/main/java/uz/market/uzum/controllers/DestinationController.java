@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.market.uzum.domains.Destination;
+import uz.market.uzum.dtos.destination.DestinationUpdateDTO;
 import uz.market.uzum.services.DestinationService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,9 +34,9 @@ public class DestinationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Destination> update(@PathVariable Long id, @RequestBody Destination destination) {
-        Optional<Destination> updateDestination = destinationService.updateDestination(id, destination);
-        return ResponseEntity.ok(updateDestination.get());
+    public ResponseEntity<Destination> update(@PathVariable Long id, @RequestBody DestinationUpdateDTO destination) {
+        Destination updateDestination = destinationService.updateDestination(id, destination);
+        return ResponseEntity.ok(updateDestination);
     }
 
     @DeleteMapping("/{id}")
