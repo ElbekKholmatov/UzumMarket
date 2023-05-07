@@ -14,6 +14,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Basket extends Auditable {
 
     @Id
@@ -28,11 +29,17 @@ public class Basket extends Auditable {
     private User user;
 
     @Builder(builderMethodName = "basketBuilder")
-    public Basket(Long createdBy, Long updateBy, LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDeleted, Long id, Collection<ProductOrder> product, User user) {
+    public Basket(Long createdBy, Long updateBy,
+                  LocalDateTime createdAt, LocalDateTime updatedAt,
+                  boolean isDeleted, Long id, Collection<ProductOrder> product, User user) {
         super(createdBy, updateBy, createdAt, updatedAt, isDeleted);
         this.id = id;
         this.product = product;
         this.user = user;
     }
 
+    public Basket(Collection<ProductOrder> product, User user) {
+        this.product = product;
+        this.user = user;
+    }
 }

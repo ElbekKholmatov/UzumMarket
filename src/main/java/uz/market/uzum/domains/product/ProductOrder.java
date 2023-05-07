@@ -3,7 +3,6 @@ package uz.market.uzum.domains.product;
 import jakarta.persistence.*;
 import lombok.*;
 import uz.market.uzum.domains.Auditable;
-import uz.market.uzum.enums.ProductOrderStatus;
 
 
 @Setter

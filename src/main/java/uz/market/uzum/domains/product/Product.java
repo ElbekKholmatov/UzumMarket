@@ -2,6 +2,7 @@ package uz.market.uzum.domains.product;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 import uz.market.uzum.domains.Auditable;
 import uz.market.uzum.domains.Document;
 import uz.market.uzum.enums.ProductStatus;
@@ -12,6 +13,7 @@ import java.util.Collection;
 
 @Setter
 @Getter
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

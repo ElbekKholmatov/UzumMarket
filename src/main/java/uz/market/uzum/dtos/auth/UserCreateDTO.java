@@ -1,9 +1,7 @@
 package uz.market.uzum.dtos.auth;
 
-import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springdoc.core.annotations.ParameterObject;
 
@@ -21,10 +19,6 @@ public record UserCreateDTO(@Size(
 ) String firstName, @NotBlank(
         message = "Lastname must not be blank"
 ) String lastName, @NotBlank(
-        message = "Phone number must not be blank"
-) @Pattern(
-        regexp = "^(\\+998|8)[ -]?\\d{2}[ -]?\\d{3}[ -]?\\d{2}[ -]?\\d{2}$"
-) String phoneNumber, @NotBlank(
         message = "Email must not be blank"
 ) @Email(
         regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
@@ -40,11 +34,7 @@ public record UserCreateDTO(@Size(
             message = "Firstname must not be blank"
     ) String firstName, @NotBlank(
             message = "Lastname must not be blank"
-    ) String lastName, @Parameter(description = "Phone number must be in format +998 99 999 99 or  8 99 999 99 or with hyphen") @NotBlank(
-            message = "Phone number must not be blank"
-    ) @Pattern(
-            regexp = "^(\\+998|8)[ -]?\\d{2}[ -]?\\d{3}[ -]?\\d{2}[ -]?\\d{2}$"
-    ) String phoneNumber, @NotBlank(
+    ) String lastName, @NotBlank(
             message = "Email must not be blank"
     ) @Email(
             regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
@@ -53,7 +43,6 @@ public record UserCreateDTO(@Size(
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
         this.email = email;
     }
 
@@ -77,17 +66,6 @@ public record UserCreateDTO(@Size(
             message = "Lastname must not be blank"
     ) String lastName() {
         return this.lastName;
-    }
-
-    @Parameter(
-            description = "Phone number must be in format +998 99 999 99 or  8 99 999 99 or with hyphen"
-    )
-    public @NotBlank(
-            message = "Phone number must not be blank"
-    ) @Pattern(
-            regexp = "^(\\+998|8)[ -]?\\d{2}[ -]?\\d{3}[ -]?\\d{2}[ -]?\\d{2}$"
-    ) String phoneNumber() {
-        return this.phoneNumber;
     }
 
     public @NotBlank(

@@ -20,7 +20,7 @@ public class SessionUser {
         Authentication authentication = securityContext.getAuthentication();
         Object principal = authentication.getPrincipal();
         if (!Objects.isNull(principal))
-            return userRepository.findByPhoneNumber(principal.toString());
+            return userRepository.findByEmail(principal.toString());
         return null;
     }
 

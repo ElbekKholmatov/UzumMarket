@@ -11,6 +11,7 @@ import uz.market.uzum.services.CategoryService;
 class UzumMarketApplicationTests {
     @Test
     void contextLoads() {
+
     }
 
 }
