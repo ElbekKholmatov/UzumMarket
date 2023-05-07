@@ -4,6 +4,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -82,13 +83,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InsufficientAuthenticationException.class)
     public ResponseEntity<AppErrorDTO> handleInsufficientAuthenticationException(InsufficientAuthenticationException e, HttpServletRequest request) {
         return ResponseEntity.status(403)
-                .body(new AppErrorDTO(request.getRequestURI(), e.getMessage(), 400));
+                .body(new AppErrorDTO(request.getRequestURI(), e.getMessage(), 403));
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<AppErrorDTO> handleExpiredJwtException(ExpiredJwtException e, HttpServletRequest request) {
         return ResponseEntity.status(403)
-                .body(new AppErrorDTO(request.getRequestURI(), e.getMessage(), 400));
+                .body(new AppErrorDTO(request.getRequestURI(), e.getMessage(), 403));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<AppErrorDTO> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
+        return ResponseEntity.status(403)
+                .body(new AppErrorDTO(request.getRequestURI(), ex.getMessage(), 403));
     }
 
 

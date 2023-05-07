@@ -26,8 +26,6 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(classes = {CategoryService.class})
 @ExtendWith(SpringExtension.class)
 class CategoryServiceTest {
-    @MockBean
-    private OrderMapper orderMapper;
     @Autowired
     private CategoryService categoryService;
     @MockBean
@@ -55,7 +53,7 @@ class CategoryServiceTest {
     @Test
     void getCategoryById() {
         Category category = Category.childBuilder().id(2).build();
-        when(categoryRepository.getCategoryById(any())).thenReturn(Optional.of(category));
+        when(categoryRepository.getCategoryById(2)).thenReturn(Optional.of(category));
         Category actual = categoryService.getCategoryById(2);
         assertEquals(2, actual.getId());
     }

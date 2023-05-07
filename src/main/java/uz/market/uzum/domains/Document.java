@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+@ToString
 public class Document extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

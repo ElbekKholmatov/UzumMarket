@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +18,6 @@ import uz.market.uzum.services.roles.UserPermissionService;
 
 import java.util.List;
 
-@ParameterObject
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/permission")
@@ -38,9 +36,9 @@ public class PermissionController {
             @ApiResponse(responseCode = "400", description = "Unique permission code violation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema =
             @Schema(implementation = RuntimeException.class))})
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity<UserPermission> createPermission(@RequestBody @Valid UserPermissionCreateDTO createDTO) {
+    public ResponseEntity<UserPermission> createPermission(@Valid UserPermissionCreateDTO createDTO) {
         UserPermission permission = UserPermission.builder()
                 .name(createDTO.getName())
                 .code(createDTO.getCode())
@@ -62,9 +60,9 @@ public class PermissionController {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = RuntimeException.class))}),
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<UserPermission> update(@PathVariable Integer id, @RequestBody UserPermissionCreateDTO createDTO) {
+    public ResponseEntity<UserPermission> update(@PathVariable Integer id, @Valid @RequestBody UserPermissionCreateDTO createDTO) {
         UserPermission permission = UserPermission.builder()
                 .id(id)
                 .name(createDTO.getName())
@@ -97,7 +95,7 @@ public class PermissionController {
                             )
                     })
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<UserPermission> get(@PathVariable Integer id) {
         return ResponseEntity.ok(permissionService.getPermissionById(id));
@@ -120,7 +118,7 @@ public class PermissionController {
                             )
                     }),
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         permissionService.delete(id);
@@ -144,7 +142,7 @@ public class PermissionController {
                             )
                     })
     })
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<UserPermission>> getAll() {
         List<UserPermission> permissionList = permissionService.getAll();
