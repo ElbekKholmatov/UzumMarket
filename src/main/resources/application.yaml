@@ -17,7 +17,7 @@ spring:
   datasource:
     driverClassName: org.postgresql.Driver
     username: postgres
-    password: 123
+    password: 8090
     url: jdbc:postgresql://localhost:5432/uzummarket
 
   cache:

@@ -11,6 +11,7 @@ import uz.market.uzum.exceptions.UserNotFoundException;
 import uz.market.uzum.repositories.user.UserRepository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @CacheConfig(cacheNames = "users")
@@ -39,4 +40,8 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UserNotFoundException("Users not found"));
     }
 
+
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId);
+    }
 }

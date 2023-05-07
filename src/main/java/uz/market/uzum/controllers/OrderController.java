@@ -1,25 +1,21 @@
 package uz.market.uzum.controllers;
 
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import uz.market.uzum.domains.product.Order;
-import uz.market.uzum.dtos.order.AddToOrderDTO;
-import uz.market.uzum.dtos.order.PayOrderDTO;
+import uz.market.uzum.dtos.AddToOrderDTO;
+import uz.market.uzum.enums.OrderStatus;
 import uz.market.uzum.services.OrderService;
 
-
+import java.util.Collection;
 
 @Validated
 @RestController
@@ -28,36 +24,45 @@ import uz.market.uzum.services.OrderService;
 @Tag(name = "Order", description = "API to work with orders")
 public class OrderController {
     private final OrderService orderService;
+
     @PostMapping("add/to/order")
-    public ResponseEntity<AddToOrderDTO> addToOrder(
+    public ResponseEntity<Order> addToOrder(
             @Valid @ParameterObject AddToOrderDTO addToOrderDTO
     ) {
-        return ResponseEntity.status(HttpStatusCode.valueOf(201))
-                .body(orderService.addToOrderInstallment(addToOrderDTO));
+        return ResponseEntity.ok(orderService.addToOrder(addToOrderDTO));
     }
 
-    @GetMapping("get/order/{id}")
-    public ResponseEntity<AddToOrderDTO> getOrder(@PathVariable Long id){
-        return ResponseEntity.ok().body(orderService.getOrderInstallment(id));
-    }
-
-    @GetMapping("get/allOrders")
-    public ResponseEntity<Page<Order>> getAllOrders(@RequestParam(name="size", defaultValue = "10") int size,
-                                                            @RequestParam(name="page", defaultValue = "0") int page){
-        Pageable pageable= PageRequest.of(page,size);
-    return ResponseEntity.ok().body(orderService.getAllOrders(pageable));
+    @GetMapping("get/all/new")
+    public Page<Order> getAllNewOrders(
+            @RequestParam("page") Integer page,
+            @RequestParam("size") Integer size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderService.getAllNewOrders(pageable);
     }
 
 
-
-    @PostMapping("pay/to/order")
-    public ResponseEntity<Order> payForOrder(@RequestBody PayOrderDTO payOrderDTO){
-            return ResponseEntity.ok().body(orderService.payForOrder(payOrderDTO));
+    @GetMapping("get/all/payment")
+    public Page<Order> getAllOrders(
+            @RequestParam("page") Integer page,
+            @RequestParam("size") Integer size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderService.getAllOrders(pageable);
     }
 
+    @PutMapping("update/cancel/{id}")
+    public ResponseEntity<Order> updateOrderCancel(
+            @PathVariable("id") Long id
+    ) {
+        return ResponseEntity.ok(orderService.updateOrderCancel(id));
+    }
 
-
+    @PutMapping("update/change/status/{id}")
+    public ResponseEntity<Order> updateOrderStatus(
+            @PathVariable("id") Long id,
+            @RequestParam("status") OrderStatus status
+    ) {
+        return ResponseEntity.ok(orderService.updateOrderStatus(id, status));
+    }
 }
-
-
-

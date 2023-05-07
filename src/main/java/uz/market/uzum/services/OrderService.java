@@ -2,9 +2,19 @@ package uz.market.uzum.services;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Cache;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import uz.market.uzum.configuration.security.SessionUser;
+import uz.market.uzum.domains.product.Order;
+import uz.market.uzum.domains.product.ProductOrder;
+import uz.market.uzum.dtos.AddToOrderDTO;
+import uz.market.uzum.enums.OrderStatus;
 import uz.market.uzum.domains.product.Order;
 import uz.market.uzum.dtos.order.AddToOrderDTO;
 import uz.market.uzum.dtos.order.PayOrderDTO;
@@ -12,6 +22,11 @@ import uz.market.uzum.enums.OrderStatus;
 import uz.market.uzum.enums.Payment;
 import uz.market.uzum.mappers.product.OrderMapper;
 import uz.market.uzum.repositories.OrderRepository;
+import uz.market.uzum.repositories.ProductOrderRepository;
+import uz.market.uzum.services.user.UserService;
+
+import java.util.Collection;
+
 import uz.market.uzum.repositories.order.OrderPaginationRepository;
 
 import java.util.List;
@@ -20,6 +35,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final SessionUser sessionUser;
+    private final ProductOrderRepository productOrderRepository;
+
+
+    public Order addToOrder(AddToOrderDTO addToOrderDTO) {
+        Long userId = sessionUser.id();
+        Collection<ProductOrder> allProducts = productOrderRepository.findALLByIds(addToOrderDTO.productIds());
+        return orderRepository.save(Order.childBuilder()
+                .userId(userId)
+                .status(OrderStatus.NEW)
+                .payment(addToOrderDTO.payment())
+                .products(allProducts)
+                .build());
+    }
+
+
+    @Cacheable(value = "orders", key = "#pageable.pageNumber")
+    public Page<Order> getAllNewOrders(Pageable pageable) {
+        return orderRepository.findAllByStatus(pageable);
+    }
     private final OrderMapper orderMapper;
     private final OrderPaginationRepository orderPaginationRepository;
 
@@ -32,6 +67,10 @@ public class OrderService {
      Order order=orderRepository.findById(id)
              .orElseThrow(()->new RuntimeException("Order not found"));
        return orderMapper.toAppToOrderDTO(order);
+    }
+    @Cacheable(value = "orders", key = "#pageable.pageNumber")
+    public Page<Order> getAllOrders(Pageable pageable) {
+        return orderRepository.findAllOnPaying(pageable);
     }
 
     public Page<Order> getAllOrders(Pageable pageable) {
