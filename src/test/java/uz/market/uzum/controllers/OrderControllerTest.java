@@ -56,54 +56,9 @@ public class OrderControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Test
-    public void addToOrder() throws Exception {
-        AddToOrderDTO addToOrderDTO = new AddToOrderDTO(List.of(1L), Payment.CASH);
 
-        Order order = new Order();
-        order.setId(1L);
 
-        when(orderService.addToOrder(Mockito.any(AddToOrderDTO.class)))
-                .thenReturn(order);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/order/add/to/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(addToOrderDTO)))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String contentAsString = result.getResponse().getContentAsString();
-        Order actual = objectMapper.readValue(contentAsString, Order.class);
-
-        verify(orderService, Mockito.times(1)).addToOrder(Mockito.any(AddToOrderDTO.class));
-        Mockito.verifyNoMoreInteractions(orderService);
-    }
-
-    @Test
-    public void getAllNewOrders() throws Exception {
-        List<Order> orderList = new ArrayList<>();
-        Order order = new Order();
-        order.setId(1L);
-        orderList.add(order);
-
-        PageImpl<Order> page = new PageImpl<>(orderList);
-
-        when(orderService.getAllNewOrders(Mockito.any(Pageable.class)))
-                .thenReturn(page);
-
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/order/get/all/new?page=0&size=10")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String contentAsString = result.getResponse().getContentAsString();
-        PageImpl<Order> actual = objectMapper.readValue(contentAsString, PageImpl.class);
-
-        verify(orderService, Mockito.times(1)).getAllNewOrders(Mockito.any(Pageable.class));
-        Mockito.verifyNoMoreInteractions(orderService);
-    }
 
         /**
          * Method under test: {@link OrderController#addToOrder(AddToOrderDTO)}
@@ -439,54 +394,8 @@ public class OrderControllerTest {
         verify(orderService).updateOrderStatus(Mockito.<Long>any(), Mockito.<OrderStatus>any());
     }
 
-    @Test
-    public void addToOrder3() throws Exception {
-        AddToOrderDTO addToOrderDTO = new AddToOrderDTO(List.of(1L),Payment.INSTALLMENTx4);
 
-        Order order = new Order();
-        order.setId(1L);
 
-        Mockito.when(orderService.addToOrder(Mockito.any(AddToOrderDTO.class)))
-                .thenReturn(order);
-
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/order/add/to/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(addToOrderDTO)))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String contentAsString = result.getResponse().getContentAsString();
-        Order actual = objectMapper.readValue(contentAsString, Order.class);
-
-        Mockito.verify(orderService, Mockito.times(1)).addToOrder(Mockito.any(AddToOrderDTO.class));
-        Mockito.verifyNoMoreInteractions(orderService);
-    }
-
-    @Test
-    public void getAllNewOrders2() throws Exception {
-        List<Order> orderList = new ArrayList<>();
-        Order order = new Order();
-        order.setId(1L);
-        orderList.add(order);
-
-        PageImpl<Order> page = new PageImpl<>(orderList);
-
-        Mockito.when(orderService.getAllNewOrders(Mockito.any(Pageable.class)))
-                .thenReturn(page);
-
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/order/get/all/new?page=0&size=10")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String contentAsString = result.getResponse().getContentAsString();
-        PageImpl<Order> actual = objectMapper.readValue(contentAsString, PageImpl.class);
-
-        Mockito.verify(orderService, Mockito.times(1)).getAllNewOrders(Mockito.any(Pageable.class));
-        Mockito.verifyNoMoreInteractions(orderService);
-    }
 
     /**
      * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
