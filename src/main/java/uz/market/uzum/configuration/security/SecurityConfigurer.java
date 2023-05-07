@@ -170,6 +170,6 @@ public class SecurityConfigurer {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return userRepository::findByPhoneNumber;
+        return userRepository::findByEmail;
     }
 }

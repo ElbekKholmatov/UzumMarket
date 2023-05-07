@@ -1,0 +1,9 @@
+uz/market/uzum/UzumMarketApplicationTests.class
+uz/market/uzum/services/ProductServiceTest.class
+uz/market/uzum/services/CategoryServiceTest.class
+uz/market/uzum/repositories/user/UserRolesRepositoryTest.class
+uz/market/uzum/controllers/DocumentControllerTest.class
+uz/market/uzum/services/auth/AuthServiceTest.class
+uz/market/uzum/services/OrderServiceTest.class
+uz/market/uzum/repositories/user/UserRepositoryTest.class
+uz/market/uzum/controllers/auth/AuthControllerTest.class

@@ -1,30 +1,24 @@
 package uz.market.uzum;
 
-import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import uz.market.uzum.configuration.security.SessionUser;
 
-import java.util.Optional;
-
-@SpringBootApplication
+@EnableAsync
 @EnableJpaAuditing
-@RequiredArgsConstructor
+@SpringBootApplication
+@OpenAPIDefinition
+@EnableJpaRepositories
 public class UzumMarketApplication {
-    private final SessionUser sessionUser;
 
     public static void main(String[] args) {
         SpringApplication.run(UzumMarketApplication.class, args);
     }
 
-    @Bean
-    AuditorAware<Long> auditorAware() {
-        return () -> Optional.ofNullable(sessionUser.id());
-    }
 
     /*
     todo 1 Elbek order, payment,
