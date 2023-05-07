@@ -1,33 +1,36 @@
 package uz.market.uzum.controllers.auth;
 
-import org.junit.jupiter.api.AfterEach;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import uz.market.uzum.dtos.auth.TokenResponse;
+import uz.market.uzum.services.auth.AuthService;
 
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.Date;
 
-@ExtendWith(MockitoExtension.class)
-class AuthControllerTest {
+public class AuthControllerTest {
+
+    private static final Date ACCESS_TOKEN_EXPIRY = new Date(6000000);
+    private static final Date REFRESH_TOKEN_EXPIRY = new Date(864000000);
+    private static final TokenResponse EXPECTED_TOKEN_RESPONSE = new TokenResponse(ACCESS_TOKEN_EXPIRY, REFRESH_TOKEN_EXPIRY);
+    private MockMvc mockMvc;
+    private ObjectMapper objectMapper;
+
+    @Mock
+    private AuthService authService;
+
+    @InjectMocks
+    private AuthController authController;
 
     @BeforeEach
-    void setUp() {
-
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
+        objectMapper = new ObjectMapper();
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void generateToken() {
-    }
-
-    @Test
-    void refreshToken() {
-    }
-
-    @Test
-    void register() {
-    }
 }

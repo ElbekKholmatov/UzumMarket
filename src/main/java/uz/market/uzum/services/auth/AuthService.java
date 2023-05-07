@@ -69,15 +69,6 @@ public class AuthService {
     }
 
 
-    public AuthService(final AuthenticationManager authenticationManager, final UserRepository userRepository, final PasswordEncoder passwordEncoder, final JwtUtils jwtUtils, final UserRolesRepository userRolesRepository, BasketRepository basketRepository) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtils = jwtUtils;
-        this.userRolesRepository = userRolesRepository;
-        this.basketRepository = basketRepository;
-    }
-
     public String addRole(Long userId, Integer roleId) {
         UserRole role = userRolesRepository.findById(roleId).orElseThrow(() -> new ItemNotFoundException("Role not found"));
         return userRepository.findById(userId).map(user -> {
@@ -85,5 +76,14 @@ public class AuthService {
             userRepository.save(user);
             return "Role added";
         }).orElseThrow(() -> new ItemNotFoundException("User not found"));
+    }
+
+    public AuthService(final AuthenticationManager authenticationManager, final UserRepository userRepository, final PasswordEncoder passwordEncoder, final JwtUtils jwtUtils, final UserRolesRepository userRolesRepository, BasketRepository basketRepository) {
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
+        this.userRolesRepository = userRolesRepository;
+        this.basketRepository = basketRepository;
     }
 }
