@@ -40,11 +40,8 @@ public class PermissionController {
     @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<UserPermission> createPermission(@Valid UserPermissionCreateDTO createDTO) {
-        UserPermission permission = UserPermission.builder()
-                .name(createDTO.getName())
-                .code(createDTO.getCode())
-                .build();
-        permission = permissionService.save(permission);
+
+        var permission = permissionService.save(createDTO);
         return ResponseEntity.ok(permission);
     }
 

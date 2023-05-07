@@ -28,6 +28,7 @@ public class UserRoleService {
             UserRole role = UserRoleMapper.ROLE_MAPPER.fromUserCreateDTOtoUserRole(dto);
             return userRolesRepository.save(role);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DuplicateUserRoleCodeException("User role with \"%s\" code already exists".formatted(dto.getCode()));
         }
     }

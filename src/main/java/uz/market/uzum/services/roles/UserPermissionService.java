@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import uz.market.uzum.domains.user.UserPermission;
+import uz.market.uzum.dtos.roles.UserPermissionCreateDTO;
 import uz.market.uzum.exceptions.DuplicatePermissionCodeException;
 import uz.market.uzum.exceptions.ItemNotFoundException;
 import uz.market.uzum.repositories.user.UserPermissionRepository;
@@ -22,12 +23,16 @@ public class UserPermissionService {
 
 
     @Cacheable(key = "#root.methodName")
-    public UserPermission save(UserPermission permission) {
+    public UserPermission save(UserPermissionCreateDTO createDTO) {
         try {
+            UserPermission permission = UserPermission.builder()
+                    .name(createDTO.getName())
+                    .code(createDTO.getCode())
+                    .build();
             return userPermissionRepository.save(permission);
         } catch (Exception e) {
 
-            throw new DuplicatePermissionCodeException("\"%s\" permission code already exists".formatted(permission.getCode()));
+            throw new DuplicatePermissionCodeException("\"%s\" permission code already exists".formatted(createDTO.getCode()));
         }
     }
 

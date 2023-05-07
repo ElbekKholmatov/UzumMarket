@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import uz.market.uzum.dtos.auth.TokenResponse;
@@ -20,7 +21,7 @@ public class AuthControllerTest {
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
 
-    @Mock
+    @MockBean
     private AuthService authService;
 
     @InjectMocks

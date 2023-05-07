@@ -8,6 +8,7 @@ import java.util.Collection;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
