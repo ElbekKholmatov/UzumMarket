@@ -8,7 +8,8 @@ import uz.market.uzum.dtos.comment.CommentCreateDto;
 import uz.market.uzum.dtos.comment.CommentUpdateDTO;
 import uz.market.uzum.exceptions.ItemNotFoundException;
 import uz.market.uzum.repositories.CommentRepository;
-import uz.market.uzum.repositories.product.ProductRepository;
+import uz.market.uzum.repositories.ProductRepository;
+
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class CommentService {
         comment.setDeleted(true);
         return comment;
     }
-    public List<Comment> getComments(Long productId){
+    public List<Comment> getComments(Integer productId){
         productRepository.findById(productId).orElseThrow(() -> new ItemNotFoundException("Product not found "));
         return commentRepository.findByProductId(productId).orElseThrow(() -> new ItemNotFoundException("Comments not found "));
     }

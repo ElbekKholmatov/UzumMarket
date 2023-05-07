@@ -25,7 +25,7 @@ public class CommentController {
     }
 
     @GetMapping("/{productId}")
-    public List<Comment> getCommentsByProductId(@PathVariable Long productId){
+    public List<Comment> getCommentsByProductId(@PathVariable Integer productId){
         return commentService.getComments(productId);
     }
 
