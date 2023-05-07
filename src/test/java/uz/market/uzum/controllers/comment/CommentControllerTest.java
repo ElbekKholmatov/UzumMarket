@@ -15,6 +15,7 @@ import uz.market.uzum.UzumMarketApplication;
 import uz.market.uzum.domains.product.Comment;
 import uz.market.uzum.domains.product.Product;
 import uz.market.uzum.dtos.comment.CommentUpdateDTO;
+import uz.market.uzum.repositories.ProductRepository;
 import uz.market.uzum.services.comment.CommentService;
 
 import java.util.List;
