@@ -32,4 +32,7 @@ public class UserRole {
     private Collection<UserPermission> authPermissions;
 
 
+    public UserRole(String code) {
+        this.code = code;
+    }
 }

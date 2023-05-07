@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Auditable {
 
-    @CreatedBy()
+    @CreatedBy
     private Long createdBy;
 
     @LastModifiedBy

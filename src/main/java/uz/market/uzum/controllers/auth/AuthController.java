@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.market.uzum.domains.user.User;
 import uz.market.uzum.dtos.AppErrorDTO;
@@ -31,7 +30,7 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = AppErrorDTO.class)))
     })
     @PostMapping({"/access/token"})
-    public ResponseEntity<TokenResponse> generateToken(@RequestBody TokenRequest tokenRequest) {
+    public ResponseEntity<TokenResponse> generateToken(@Valid TokenRequest tokenRequest) {
         return ResponseEntity.ok(this.authService.generateToken(tokenRequest));
     }
 
@@ -42,7 +41,7 @@ public class AuthController {
             }
     )
     @PostMapping({"/refresh/token"})
-    public ResponseEntity<TokenResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+    public ResponseEntity<TokenResponse> refreshToken(@Valid RefreshTokenRequest refreshTokenRequest) {
         return ResponseEntity.ok(this.authService.refreshToken(refreshTokenRequest));
     }
 
@@ -55,4 +54,14 @@ public class AuthController {
         return ResponseEntity.ok(this.authService.create(dto));
     }
 
+    @Operation(summary = "This API is used for adding role to user", responses = {
+            @ApiResponse(responseCode = "200", description = "Role added",
+                    content = @Content(schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = AppErrorDTO.class)))
+    })
+    @PostMapping({"/addRole"})
+    public ResponseEntity<String> addRole(@NonNull Long userId, @NonNull Integer roleId) {
+        return ResponseEntity.ok(this.authService.addRole(userId, roleId));
+    }
 }

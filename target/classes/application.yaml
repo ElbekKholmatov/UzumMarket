@@ -8,6 +8,11 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
+  main:
+    allow-bean-definition-overriding: true
 
   datasource:
     driverClassName: org.postgresql.Driver
@@ -15,8 +20,19 @@ spring:
     password: 08203
     url: jdbc:postgresql://localhost:5432/uzummarket
 
+  cache:
+    redis:
+      time-to-live: 30m
+      enable-statistics: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: root123
+
+
   profiles:
-    active: prod, test
+    active: prod
 
 jwt:
   access:
@@ -70,16 +86,10 @@ logging:
 spring:
   config:
     activate:
-      on-profile: test
-server:
-  port: 9090
----
-spring:
-  config:
-    activate:
       on-profile: prod
 server:
   port: 8080
+
 
 logging:
   level:
