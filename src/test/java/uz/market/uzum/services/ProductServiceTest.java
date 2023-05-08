@@ -128,7 +128,8 @@ class ProductServiceTest {
         assertEquals(1, actual.getId());
 
     }
-  @Test
+
+    @Test
     void updateProductShouldThrowException() {
         Product product = Product.childBuilder().id(1).build();
         when(productRepository.save(any())).thenReturn(product);

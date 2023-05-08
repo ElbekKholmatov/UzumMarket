@@ -1,17 +1,15 @@
 package uz.market.uzum.domains.product;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import uz.market.uzum.enums.OrderStatus;
+import uz.market.uzum.enums.Payment;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.junit.jupiter.api.Test;
-import uz.market.uzum.enums.OrderStatus;
-import uz.market.uzum.enums.Payment;
+import static org.junit.jupiter.api.Assertions.*;
 
 class OrderTest {
     @Test

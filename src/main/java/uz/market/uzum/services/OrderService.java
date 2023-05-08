@@ -43,6 +43,7 @@ public class OrderService {
     public Page<Order> getAllNewOrders(Pageable pageable) {
         return orderRepository.findAllByStatus(pageable);
     }
+
     private final OrderMapper orderMapper;
     private final OrderPaginationRepository orderPaginationRepository;
 
@@ -52,10 +53,11 @@ public class OrderService {
     }
 
     public AddToOrderDTO getOrderInstallment(Long id) {
-     Order order=orderRepository.findById(id)
-             .orElseThrow(()->new RuntimeException("Order not found"));
-       return orderMapper.toAppToOrderDTO(order);
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        return orderMapper.toAppToOrderDTO(order);
     }
+
     @Cacheable(value = "orders", key = "#pageable.pageNumber")
     public Page<Order> getAllOrders(Pageable pageable) {
         return orderRepository.findAllOnPaying(pageable);
@@ -76,14 +78,13 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public Order payForInstallment(Order order, Double prices,PayOrderDTO payOrderDTO) {
+    public Order payForInstallment(Order order, Double prices, PayOrderDTO payOrderDTO) {
         Order orderFound = orderRepository.findById(payOrderDTO.orderId())
                 .orElseThrow(() -> new RuntimeException("Order not found"));
-        if(prices-payOrderDTO.amount()<=0){
+        if (prices - payOrderDTO.amount() <= 0) {
             orderFound.setStatus(OrderStatus.COMPLETED);
             return orderRepository.save(orderFound);
-        }
-        else{
+        } else {
             throw new RuntimeException("Sum is not enough to complete order");
         }
     }

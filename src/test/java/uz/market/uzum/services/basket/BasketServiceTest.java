@@ -1,15 +1,5 @@
 package uz.market.uzum.services.basket;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Optional;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -32,6 +22,13 @@ import uz.market.uzum.repositories.user.UserRepository;
 import uz.market.uzum.services.CategoryService;
 import uz.market.uzum.services.ProductService;
 import uz.market.uzum.services.user.UserService;
+
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {BasketService.class})
 @ExtendWith(SpringExtension.class)
@@ -126,9 +123,6 @@ class BasketServiceTest {
     }
 
 
-
-
-
     @Test
     void testRemoveProduct3() {
 
@@ -149,6 +143,7 @@ class BasketServiceTest {
         verify(userRepository).findByEmail(Mockito.<String>any());
         verify(productRepository).findById(Mockito.<Integer>any());
     }
+
     @Test
     void testRemoveProduct5() {
 

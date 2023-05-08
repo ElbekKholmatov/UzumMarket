@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.market.uzum.domains.Destination;
-
 import uz.market.uzum.dtos.DestinationUpdateDTO;
 import uz.market.uzum.services.DestinationService;
 

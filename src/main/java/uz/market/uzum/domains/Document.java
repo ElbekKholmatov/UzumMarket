@@ -28,6 +28,7 @@ public class Document extends Auditable {
     @Column(nullable = false)
     private Long size;
     private String path;
+
     @Builder(builderMethodName = "childBuilder")
     public Document(Long createdBy, Long updateBy, LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDeleted, Long id, String originalName, String generatedName, String extension, String mimeType, Long size, String path) {
         super(createdBy, updateBy, createdAt, updatedAt, isDeleted);

@@ -1,20 +1,16 @@
 package uz.market.uzum.domains.product;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.core.GrantedAuthority;
+import uz.market.uzum.domains.user.User;
+import uz.market.uzum.enums.UserStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.security.core.GrantedAuthority;
-import uz.market.uzum.domains.user.User;
-import uz.market.uzum.enums.UserStatus;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BasketTest {
     @Test
@@ -67,6 +63,7 @@ class BasketTest {
         assertTrue(user2.isAccountNonExpired());
         assertTrue(user2.isAccountNonLocked());
     }
+
     @Test
     void testConstructor2() {
         ArrayList<ProductOrder> product = new ArrayList<>();

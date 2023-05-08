@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -67,7 +66,7 @@ public class SecurityConfigurer {
                         "/api/v1/auth/**",
                         "/actuator",
                         "/error",
-                        "/webjars/**","/**"
+                        "/webjars/**", "/**"
                 )
                 .permitAll()
                 .anyRequest()

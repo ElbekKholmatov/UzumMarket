@@ -5,11 +5,12 @@
 
 package uz.market.uzum.mappers.product;
 
-import java.util.Collection;
 import org.springframework.stereotype.Component;
 import uz.market.uzum.domains.product.Order;
 import uz.market.uzum.dtos.order.AddToOrderDTO;
 import uz.market.uzum.enums.Payment;
+
+import java.util.Collection;
 
 @Component
 public class OrderMapperImpl implements OrderMapper {

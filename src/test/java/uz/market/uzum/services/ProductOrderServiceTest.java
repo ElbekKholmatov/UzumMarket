@@ -1,19 +1,14 @@
 package uz.market.uzum.services;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import uz.market.uzum.domains.product.Product;
 import uz.market.uzum.domains.product.ProductOrder;
 import uz.market.uzum.dtos.ProductOrderDTO;
-import uz.market.uzum.repositories.CategoryRepository;
 import uz.market.uzum.repositories.ProductOrderRepository;
-import uz.market.uzum.repositories.ProductRepository;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.*;
 
 class ProductOrderServiceTest {
 

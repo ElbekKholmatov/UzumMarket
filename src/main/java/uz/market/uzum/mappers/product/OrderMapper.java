@@ -7,7 +7,8 @@ import uz.market.uzum.dtos.order.AddToOrderDTO;
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
 
- Order toOrder(AddToOrderDTO addToOrderDTO);
- AddToOrderDTO toAppToOrderDTO(Order order);
+    Order toOrder(AddToOrderDTO addToOrderDTO);
+
+    AddToOrderDTO toAppToOrderDTO(Order order);
 
 }

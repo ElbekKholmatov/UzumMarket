@@ -41,7 +41,7 @@ public class CategoryController {
         return ResponseEntity.ok(category);
     }
 
- @Operation(summary = "This API used for getting all categories", responses = {
+    @Operation(summary = "This API used for getting all categories", responses = {
             @ApiResponse(responseCode = "200", description = "Categories found"),
             @ApiResponse(responseCode = "404", description = "Categories not found")})
     @GetMapping(value = "/getAll")
@@ -55,7 +55,7 @@ public class CategoryController {
                     @ApiResponse(responseCode = "404", description = "Category not found")})
     @DeleteMapping(produces = "application/json")
     public ResponseEntity<Void> deleteCategory(Integer id) {
-         categoryService.deleteCategory(id);
+        categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
 

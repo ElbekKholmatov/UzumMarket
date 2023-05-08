@@ -1,4 +1,5 @@
-set  search_path to public;
+set
+search_path to public;
 
 
 -- delete from user_role where code in ('USER', 'ADMIN');

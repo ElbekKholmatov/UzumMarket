@@ -1,6 +1,5 @@
 package uz.market.uzum.repositories;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import uz.market.uzum.domains.Destination;

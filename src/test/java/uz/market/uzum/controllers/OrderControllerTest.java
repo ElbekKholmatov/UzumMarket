@@ -12,13 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import uz.market.uzum.configuration.security.SessionUser;
 import uz.market.uzum.domains.product.Order;
 import uz.market.uzum.dtos.order.AddToOrderDTO;
@@ -33,12 +29,10 @@ import uz.market.uzum.services.OrderService;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -333,8 +327,6 @@ public class OrderControllerTest {
         assertEquals(200, actualUpdateOrderStatusResult.getStatusCodeValue());
         verify(orderService).updateOrderStatus(Mockito.<Long>any(), Mockito.<OrderStatus>any());
     }
-
-
 
 
     @Test

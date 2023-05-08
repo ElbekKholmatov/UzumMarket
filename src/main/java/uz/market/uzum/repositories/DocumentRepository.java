@@ -22,8 +22,8 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     Page<Document> findAllByCreatedBy(Long id, Pageable pageable);
 
     @Query("select d from Document d where d.isDeleted = false and d.generatedName = ?1")
-
     Optional<Document> findByName(String fileName);
+
     @Query("select d from Document d where d.isDeleted = false and d.generatedName = ?1")
     Document findByNameLink(String fileName);
 

@@ -32,6 +32,6 @@ public class Comment extends Auditable {
         this.id = id;
         this.text = text;
         this.productId = productId;
-        this.rate=rate;
+        this.rate = rate;
     }
 }

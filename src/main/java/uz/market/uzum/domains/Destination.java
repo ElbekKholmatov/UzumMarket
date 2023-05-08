@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Builder
 @ToString
-public class Destination extends Auditable{
+public class Destination extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

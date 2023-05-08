@@ -26,7 +26,7 @@ public class DocumentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Document> getDocument(@Valid @NotNull  @PathVariable Long id) {
+    public ResponseEntity<Document> getDocument(@Valid @NotNull @PathVariable Long id) {
         return ResponseEntity.ok(
                 documentService.getDocument(id).orElseThrow(
                         () -> new RuntimeException("Document not found")
@@ -36,7 +36,7 @@ public class DocumentController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@Valid @NotNull  @PathVariable Long id) {
+    public ResponseEntity<Boolean> delete(@Valid @NotNull @PathVariable Long id) {
         documentService.deleteDocument(id);
         return ResponseEntity.ok(true);
     }

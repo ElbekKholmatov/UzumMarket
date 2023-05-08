@@ -1,24 +1,19 @@
 package uz.market.uzum.services;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.Optional;
-
-import org.junit.jupiter.api.Disabled;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import uz.market.uzum.domains.Document;
 import uz.market.uzum.repositories.DocumentRepository;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 class DocumentServiceTest {
     @Test
@@ -27,6 +22,7 @@ class DocumentServiceTest {
         DocumentService documentService = new DocumentService(documentRepository, new MediaService());
         documentService.saveDocument(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8"))));
     }
+
     @Test
     void testSaveDocument2() throws IOException {
         DocumentRepository documentRepository = mock(DocumentRepository.class);

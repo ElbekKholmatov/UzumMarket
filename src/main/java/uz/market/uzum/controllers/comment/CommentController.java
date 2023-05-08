@@ -20,21 +20,22 @@ public class CommentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Comment create(@RequestBody CommentCreateDto commentCreateDto){
-       return commentService.create(commentCreateDto);
+    public Comment create(@RequestBody CommentCreateDto commentCreateDto) {
+        return commentService.create(commentCreateDto);
     }
 
     @GetMapping("/{productId}")
-    public List<Comment> getCommentsByProductId(@PathVariable Integer productId){
+    public List<Comment> getCommentsByProductId(@PathVariable Integer productId) {
         return commentService.getComments(productId);
     }
 
     @PutMapping("/{id}")
-    public Comment update(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable Integer id){
-        return commentService.update(commentUpdateDTO,id);
+    public Comment update(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable Integer id) {
+        return commentService.update(commentUpdateDTO, id);
     }
+
     @DeleteMapping("/{id}")
-    public Comment delete(@PathVariable Integer id){
+    public Comment delete(@PathVariable Integer id) {
         return commentService.delete(id);
     }
 

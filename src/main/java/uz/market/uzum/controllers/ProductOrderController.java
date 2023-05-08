@@ -24,7 +24,7 @@ public class ProductOrderController {
     public ResponseEntity<ProductOrder> add(@RequestBody @Valid ProductOrderDTO dto) {
         String phoneNumber = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 //        ProductOrder pOrder=productOrderService.add(dto);
-        ProductOrder pOrder=basketService.addProduct(dto, phoneNumber);
+        ProductOrder pOrder = basketService.addProduct(dto, phoneNumber);
         return ResponseEntity.ok().body(pOrder);
     }
 
@@ -32,17 +32,16 @@ public class ProductOrderController {
     public ResponseEntity<ProductOrder> add(@RequestBody Long productId) {
         String phoneNumber = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 //        ProductOrder pOrder=productOrderService.add(dto);
-        ProductOrder pOrder=basketService.removeProduct(productId, phoneNumber);
+        ProductOrder pOrder = basketService.removeProduct(productId, phoneNumber);
         return ResponseEntity.ok().body(pOrder);
     }
 
 
     @GetMapping("/getBasket")
     public ResponseEntity<Basket> getBasket() {
-        Basket basket=basketService.getBasket();
+        Basket basket = basketService.getBasket();
         return ResponseEntity.ok().body(basket);
     }
-
 
 
 }

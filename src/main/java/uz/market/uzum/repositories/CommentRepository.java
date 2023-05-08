@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
-    @Query(nativeQuery = true, value="select * from comment   where  product_id=?1 and is_deleted=false ")
+    @Query(nativeQuery = true, value = "select * from comment   where  product_id=?1 and is_deleted=false ")
     Optional<List<Comment>> findByProductId(Integer productId);
 
 

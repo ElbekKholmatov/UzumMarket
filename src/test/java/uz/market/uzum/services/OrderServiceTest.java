@@ -1,21 +1,5 @@
 package uz.market.uzum.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
@@ -33,6 +17,13 @@ import uz.market.uzum.repositories.OrderRepository;
 import uz.market.uzum.repositories.ProductOrderRepository;
 import uz.market.uzum.repositories.order.OrderPaginationRepository;
 import uz.market.uzum.repositories.user.UserRepository;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class OrderServiceTest {
     @Test
@@ -100,6 +91,7 @@ class OrderServiceTest {
                 new OrderMapperImpl(), mock(OrderPaginationRepository.class))).getAllNewOrders(null));
         verify(orderRepository).findAllByStatus(Mockito.<Pageable>any());
     }
+
     @Test
     void testAddToOrderInstallment() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -114,6 +106,7 @@ class OrderServiceTest {
         assertNull(actualAddToOrderInstallmentResult.productIds());
         verify(orderRepository).save(Mockito.<Order>any());
     }
+
     @Test
     void testAddToOrderInstallment2() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -143,6 +136,7 @@ class OrderServiceTest {
         verify(orderMapper).toOrder(Mockito.<AddToOrderDTO>any());
         verify(orderMapper).toAppToOrderDTO(Mockito.<Order>any());
     }
+
     @Test
     void testGetOrderInstallment() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -171,6 +165,7 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
         verify(order).getPayment();
     }
+
     @Test
     void testGetOrderInstallment3() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -181,6 +176,7 @@ class OrderServiceTest {
                 new OrderMapperImpl(), mock(OrderPaginationRepository.class))).getOrderInstallment(1L));
         verify(orderRepository).findById(Mockito.<Long>any());
     }
+
     @Test
     void testGetAllOrders() {
         OrderRepository orderRepository = mock(OrderRepository.class);

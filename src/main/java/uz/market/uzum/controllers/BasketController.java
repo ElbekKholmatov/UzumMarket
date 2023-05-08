@@ -17,8 +17,8 @@ public class BasketController {
     private final BasketService basketService;
 
     @GetMapping("/")
-    public ResponseEntity<Basket> get(){
-        Basket basket=basketService.getBasket();
+    public ResponseEntity<Basket> get() {
+        Basket basket = basketService.getBasket();
         return ResponseEntity.ok().body(basket);
     }
 

@@ -1,25 +1,19 @@
 package uz.market.uzum.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import uz.market.uzum.domains.product.Basket;
-import uz.market.uzum.repositories.BasketRepository;
 import uz.market.uzum.repositories.CategoryRepository;
 import uz.market.uzum.repositories.ProductOrderRepository;
 import uz.market.uzum.repositories.ProductRepository;
-import uz.market.uzum.repositories.user.UserRepository;
 import uz.market.uzum.services.CategoryService;
 import uz.market.uzum.services.ProductOrderService;
 import uz.market.uzum.services.ProductService;
 import uz.market.uzum.services.basket.BasketService;
-import uz.market.uzum.services.user.UserService;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 class ProductOrderControllerTest {
     @Test

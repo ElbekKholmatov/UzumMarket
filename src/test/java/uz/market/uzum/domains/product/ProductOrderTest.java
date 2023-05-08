@@ -1,9 +1,9 @@
 package uz.market.uzum.domains.product;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
-
-import org.junit.jupiter.api.Test;
 
 class ProductOrderTest {
     @Test
@@ -20,6 +20,7 @@ class ProductOrderTest {
         assertEquals(1L, actualProductOrder.getId().longValue());
         assertSame(product, actualProductOrder.getProduct());
     }
+
     @Test
     void testConstructor2() {
         ProductOrder actualProductOrder = new ProductOrder(1L, new Product(), (short) 1, 1L);
