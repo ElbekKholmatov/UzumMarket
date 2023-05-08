@@ -35,10 +35,6 @@ import uz.market.uzum.repositories.order.OrderPaginationRepository;
 import uz.market.uzum.repositories.user.UserRepository;
 
 class OrderServiceTest {
-
-    /**
-     * Method under test: {@link OrderService#addToOrder(AddToOrderDTO)}
-     */
     @Test
     void testAddToOrder2() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -76,10 +72,6 @@ class OrderServiceTest {
         verify(productOrderRepository).findALLByIds(Mockito.<Collection<Long>>any());
     }
 
-
-    /**
-     * Method under test: {@link OrderService#getAllNewOrders(Pageable)}
-     */
     @Test
     void testGetAllNewOrders() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -108,10 +100,6 @@ class OrderServiceTest {
                 new OrderMapperImpl(), mock(OrderPaginationRepository.class))).getAllNewOrders(null));
         verify(orderRepository).findAllByStatus(Mockito.<Pageable>any());
     }
-
-    /**
-     * Method under test: {@link OrderService#addToOrderInstallment(AddToOrderDTO)}
-     */
     @Test
     void testAddToOrderInstallment() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -126,10 +114,6 @@ class OrderServiceTest {
         assertNull(actualAddToOrderInstallmentResult.productIds());
         verify(orderRepository).save(Mockito.<Order>any());
     }
-
-    /**
-     * Method under test: {@link OrderService#addToOrderInstallment(AddToOrderDTO)}
-     */
     @Test
     void testAddToOrderInstallment2() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -142,10 +126,6 @@ class OrderServiceTest {
         verify(orderRepository).save(Mockito.<Order>any());
     }
 
-
-    /**
-     * Method under test: {@link OrderService#addToOrderInstallment(AddToOrderDTO)}
-     */
     @Test
     void testAddToOrderInstallment5() {
         new RuntimeException("An error occurred");
@@ -163,10 +143,6 @@ class OrderServiceTest {
         verify(orderMapper).toOrder(Mockito.<AddToOrderDTO>any());
         verify(orderMapper).toAppToOrderDTO(Mockito.<Order>any());
     }
-
-    /**
-     * Method under test: {@link OrderService#getOrderInstallment(Long)}
-     */
     @Test
     void testGetOrderInstallment() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -180,9 +156,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#getOrderInstallment(Long)}
-     */
     @Test
     void testGetOrderInstallment2() {
         Order order = mock(Order.class);
@@ -198,10 +171,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
         verify(order).getPayment();
     }
-
-    /**
-     * Method under test: {@link OrderService#getOrderInstallment(Long)}
-     */
     @Test
     void testGetOrderInstallment3() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -212,11 +181,6 @@ class OrderServiceTest {
                 new OrderMapperImpl(), mock(OrderPaginationRepository.class))).getOrderInstallment(1L));
         verify(orderRepository).findById(Mockito.<Long>any());
     }
-
-
-    /**
-     * Method under test: {@link OrderService#getAllOrders(Pageable)}
-     */
     @Test
     void testGetAllOrders() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -231,9 +195,6 @@ class OrderServiceTest {
         verify(orderRepository).findAllOnPaying(Mockito.<Pageable>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#getAllOrders(Pageable)}
-     */
     @Test
     void testGetAllOrders2() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -246,9 +207,6 @@ class OrderServiceTest {
         verify(orderRepository).findAllOnPaying(Mockito.<Pageable>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderCancel(Long)}
-     */
     @Test
     void testUpdateOrderCancel() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -263,9 +221,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderCancel(Long)}
-     */
     @Test
     void testUpdateOrderCancel2() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -279,9 +234,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderCancel(Long)}
-     */
     @Test
     void testUpdateOrderCancel3() {
         Order order = mock(Order.class);
@@ -300,9 +252,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderCancel(Long)}
-     */
     @Test
     void testUpdateOrderCancel4() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -315,9 +264,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderCancel(Long)}
-     */
     @Test
     void testUpdateOrderCancel5() {
         Order order = mock(Order.class);
@@ -334,9 +280,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -351,9 +294,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus2() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -367,9 +307,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus3() {
         Order order = mock(Order.class);
@@ -388,9 +325,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus4() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -403,9 +337,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus5() {
         Order order = mock(Order.class);
@@ -424,9 +355,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus6() {
         Order order = mock(Order.class);
@@ -445,9 +373,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus7() {
         Order order = mock(Order.class);
@@ -466,9 +391,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus8() {
         Order order = mock(Order.class);
@@ -487,9 +409,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus9() {
         Order order = mock(Order.class);
@@ -506,9 +425,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus10() {
         Order order = mock(Order.class);
@@ -527,9 +443,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus11() {
         Order order = mock(Order.class);
@@ -548,9 +461,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#payForInstallment(Order, Double, PayOrderDTO)}
-     */
     @Test
     void testPayForInstallment() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -567,9 +477,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#payForInstallment(Order, Double, PayOrderDTO)}
-     */
     @Test
     void testPayForInstallment2() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -586,9 +493,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#payForInstallment(Order, Double, PayOrderDTO)}
-     */
     @Test
     void testPayForInstallment3() {
         Order order = mock(Order.class);
@@ -609,9 +513,6 @@ class OrderServiceTest {
         verify(order).setStatus(Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#payForInstallment(Order, Double, PayOrderDTO)}
-     */
     @Test
     void testPayForInstallment4() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -627,9 +528,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#payForInstallment(Order, Double, PayOrderDTO)}
-     */
     @Test
     void testPayForInstallment5() {
         Order order = mock(Order.class);
@@ -648,9 +546,6 @@ class OrderServiceTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderService#payForInstallment(Order, Double, PayOrderDTO)}
-     */
     @Test
     void testPayForInstallment7() {
         Order order = mock(Order.class);

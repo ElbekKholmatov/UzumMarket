@@ -11,7 +11,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where upper(u.email) = upper(?1)")
     Optional<User> checkUniqueFields(String email);
 
+    @Query("select u from User u where u.email = ?1")
     User findByEmail(String username);
+
+
 
     Optional<User> findByEmailLike(String email);
 
