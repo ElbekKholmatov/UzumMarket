@@ -19,12 +19,14 @@ public class SessionUser {
     public User user() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
+        String name = authentication.getName();
+        if (authentication.isAuthenticated()) {
+            User byEmail = userRepository.findByEmail(name);
+            System.out.println(byEmail);
+            return byEmail;
 
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails userDT)
-            return userRepository.findByEmail(userDT.getUsername());
+        }
         return null;
-
     }
 
     public Long id() {

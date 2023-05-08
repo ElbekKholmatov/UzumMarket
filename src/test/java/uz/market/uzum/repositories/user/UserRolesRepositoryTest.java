@@ -19,17 +19,13 @@ class UserRolesRepositoryTest {
 
     @Test
     void testFindByCode() {
-        // Mock the behavior of the userRolesRepository
         UserRole userRole = UserRole.builder().code(USER_ADMIN_ROLE).build();
         when(userRolesRepository.findByCode(USER_ADMIN_ROLE)).thenReturn(userRole);
 
-        // Call the method being tested
         UserRole result = userRolesRepository.findByCode(USER_ADMIN_ROLE);
 
-        // Verify the result
         assertEquals(userRole, result);
 
-        // Verify that the userRolesRepository's method was called with the correct parameter
         verify(userRolesRepository).findByCode(USER_ADMIN_ROLE);
     }
 }

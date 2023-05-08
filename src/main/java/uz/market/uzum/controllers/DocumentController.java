@@ -25,13 +25,6 @@ public class DocumentController {
         );
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Document> updateFile(@Valid @NotNull  @RequestParam("file") MultipartFile file, @PathVariable("id") Long id) {
-        return ResponseEntity.ok(
-                documentService.updateDocument(file, id)
-        );
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Document> getDocument(@Valid @NotNull  @PathVariable Long id) {
         return ResponseEntity.ok(

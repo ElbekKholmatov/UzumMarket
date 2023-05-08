@@ -14,9 +14,6 @@ import uz.market.uzum.enums.OrderStatus;
 import uz.market.uzum.enums.Payment;
 
 class OrderTest {
-    /**
-     * Method under test: {@link Order#Order(Long, Long, LocalDateTime, LocalDateTime, boolean, Long, Long, Collection, OrderStatus, Payment)}
-     */
     @Test
     void testConstructor() {
         LocalDate ofResult = LocalDate.of(1970, 1, 1);

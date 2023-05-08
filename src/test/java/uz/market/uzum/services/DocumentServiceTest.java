@@ -42,31 +42,6 @@ class DocumentServiceTest {
     }
 
     @Test
-    void testUpdateDocument() throws IOException {
-        DocumentRepository documentRepository = mock(DocumentRepository.class);
-        doNothing().when(documentRepository).deleteDocument(Mockito.<Long>any());
-        DocumentService documentService = new DocumentService(documentRepository, new MediaService());
-        documentService
-                .updateDocument(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8"))), 1L);
-    }
-
-    @Test
-    void testUpdateDocument2() throws IOException {
-        DocumentRepository documentRepository = mock(DocumentRepository.class);
-        Document document = new Document();
-        when(documentRepository.save(Mockito.<Document>any())).thenReturn(document);
-        doNothing().when(documentRepository).deleteDocument(Mockito.<Long>any());
-        MediaService mediaService = mock(MediaService.class);
-        when(mediaService.upload(Mockito.<MultipartFile>any())).thenReturn("Upload");
-        DocumentService documentService = new DocumentService(documentRepository, mediaService);
-        assertSame(document, documentService
-                .updateDocument(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8"))), 1L));
-        verify(documentRepository).save(Mockito.<Document>any());
-        verify(documentRepository).deleteDocument(Mockito.<Long>any());
-        verify(mediaService).upload(Mockito.<MultipartFile>any());
-    }
-
-    @Test
     void testGetDocument() {
         DocumentRepository documentRepository = mock(DocumentRepository.class);
         Optional<Document> ofResult = Optional.of(new Document());

@@ -33,22 +33,6 @@ public class DocumentService {
         );
     }
 
-    @Transactional
-    @Modifying
-    public Document updateDocument(MultipartFile file, Long id) {
-        deleteDocument(id);
-        return documentRepository.save(
-                Document.childBuilder()
-                        .originalName(file.getOriginalFilename())
-                        .generatedName(randomUUID() + file.getOriginalFilename())
-                        .extension(StringUtils.getFilenameExtension(file.getOriginalFilename()))
-                        .mimeType(file.getContentType())
-                        .size(file.getSize())
-                        .path(mediaService.upload(file))
-                        .build()
-        );
-    }
-
     public Optional<Document> getDocument(Long id) {
         return documentRepository.findById(id);
     }

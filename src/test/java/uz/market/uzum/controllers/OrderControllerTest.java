@@ -56,18 +56,6 @@ public class OrderControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-
-
-
-
-        /**
-         * Method under test: {@link OrderController#addToOrder(AddToOrderDTO)}
-         */
-
-
-    /**
-     * Method under test: {@link OrderController#addToOrder(AddToOrderDTO)}
-     */
     @Test
     void testAddToOrder2() {
 
@@ -90,9 +78,6 @@ public class OrderControllerTest {
         verify(productOrderRepository).findALLByIds(Mockito.<Collection<Long>>any());
     }
 
-    /**
-     * Method under test: {@link OrderController#addToOrder(AddToOrderDTO)}
-     */
     @Test
     void testAddToOrder3() {
 
@@ -107,9 +92,6 @@ public class OrderControllerTest {
         verify(orderService).addToOrder(Mockito.<AddToOrderDTO>any());
     }
 
-    /**
-     * Method under test: {@link OrderController#getAllNewOrders(Integer, Integer)}
-     */
     @Test
     void testGetAllNewOrders() {
 
@@ -126,9 +108,6 @@ public class OrderControllerTest {
     }
 
 
-    /**
-     * Method under test: {@link OrderController#getAllNewOrders(Integer, Integer)}
-     */
     @Test
     void testGetAllNewOrders3() {
 
@@ -142,9 +121,6 @@ public class OrderControllerTest {
     }
 
 
-    /**
-     * Method under test: {@link OrderController#getAllOrders(Integer, Integer)}
-     */
     @Test
     void testGetAllOrders() {
 
@@ -161,9 +137,6 @@ public class OrderControllerTest {
     }
 
 
-    /**
-     * Method under test: {@link OrderController#getAllOrders(Integer, Integer)}
-     */
     @Test
     void testGetAllOrders3() {
 
@@ -177,9 +150,6 @@ public class OrderControllerTest {
     }
 
 
-    /**
-     * Method under test: {@link OrderController#updateOrderCancel(Long)}
-     */
     @Test
     void testUpdateOrderCancel() {
 
@@ -198,9 +168,6 @@ public class OrderControllerTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderController#updateOrderCancel(Long)}
-     */
     @Test
     void testUpdateOrderCancel2() {
 
@@ -224,9 +191,6 @@ public class OrderControllerTest {
     }
 
 
-    /**
-     * Method under test: {@link OrderController#updateOrderCancel(Long)}
-     */
     @Test
     void testUpdateOrderCancel4() {
         Order order = mock(Order.class);
@@ -241,9 +205,6 @@ public class OrderControllerTest {
         verify(orderService).updateOrderCancel(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus() {
         OrderRepository orderRepository = mock(OrderRepository.class);
@@ -261,9 +222,6 @@ public class OrderControllerTest {
         verify(orderRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus2() {
         Order order = mock(Order.class);
@@ -286,9 +244,6 @@ public class OrderControllerTest {
     }
 
 
-    /**
-     * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus4() {
         Order order = mock(Order.class);
@@ -304,9 +259,6 @@ public class OrderControllerTest {
         verify(orderService).updateOrderStatus(Mockito.<Long>any(), Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus5() {
         Order order = mock(Order.class);
@@ -322,9 +274,6 @@ public class OrderControllerTest {
         verify(orderService).updateOrderStatus(Mockito.<Long>any(), Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus6() {
         Order order = mock(Order.class);
@@ -340,9 +289,6 @@ public class OrderControllerTest {
         verify(orderService).updateOrderStatus(Mockito.<Long>any(), Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus7() {
         Order order = mock(Order.class);
@@ -358,9 +304,6 @@ public class OrderControllerTest {
         verify(orderService).updateOrderStatus(Mockito.<Long>any(), Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus8() {
         Order order = mock(Order.class);
@@ -376,9 +319,6 @@ public class OrderControllerTest {
         verify(orderService).updateOrderStatus(Mockito.<Long>any(), Mockito.<OrderStatus>any());
     }
 
-    /**
-     * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus9() {
         Order order = mock(Order.class);
@@ -397,9 +337,6 @@ public class OrderControllerTest {
 
 
 
-    /**
-     * Method under test: {@link OrderController#updateOrderStatus(Long, OrderStatus)}
-     */
     @Test
     void testUpdateOrderStatus10() {
         Order order = mock(Order.class);
