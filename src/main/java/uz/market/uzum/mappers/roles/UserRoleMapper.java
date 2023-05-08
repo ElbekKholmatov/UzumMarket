@@ -5,7 +5,7 @@ import org.mapstruct.factory.Mappers;
 import uz.market.uzum.domains.user.UserRole;
 import uz.market.uzum.dtos.roles.UserRoleDTO;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserRoleMapper {
     UserRoleMapper ROLE_MAPPER = Mappers.getMapper(UserRoleMapper.class);
 
