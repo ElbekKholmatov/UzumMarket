@@ -29,7 +29,6 @@ public class UzumMarketApplication {
     todo 7 Muhammad  Destionion point  bilan ishlash
     todo 8 Uktam  va Mirsaid  bulib tulashni tushunib qilib kelish sorry guys  databaseda ham saqlab ketishi  kerak
     todo 9 Asrorkhuja rasmlarni  cloudga saqlashni Document CRUD  Event Listenerni ishalatib yozing
-
 * */
 
 }

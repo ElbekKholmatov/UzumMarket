@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,12 +40,8 @@ public class PermissionController {
     @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<UserPermission> createPermission(@Valid UserPermissionCreateDTO createDTO) {
-        UserPermission permission = UserPermission.builder()
-                .name(createDTO.getName())
-                .code(createDTO.getCode())
-                .build();
-        permission = permissionService.save(permission);
-        return ResponseEntity.ok(permission);
+        UserPermission permission = permissionService.save(createDTO);
+        return ResponseEntity.status(201).body(permission);
     }
 
 
@@ -96,7 +93,7 @@ public class PermissionController {
                     })
     })
     @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<UserPermission> get(@PathVariable Integer id) {
         return ResponseEntity.ok(permissionService.getPermissionById(id));
     }
@@ -119,7 +116,7 @@ public class PermissionController {
                     }),
     })
     @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         permissionService.delete(id);
         return ResponseEntity.noContent().build();

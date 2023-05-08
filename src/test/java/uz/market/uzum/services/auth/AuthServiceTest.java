@@ -2,12 +2,15 @@ package uz.market.uzum.services.auth;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uz.market.uzum.configuration.jwt.JwtUtils;
 import uz.market.uzum.domains.user.User;
 import uz.market.uzum.domains.user.UserRole;
@@ -29,6 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+@ContextConfiguration(classes = {AuthService.class})
+@ExtendWith(SpringExtension.class)
 public class AuthServiceTest {
 
 
@@ -36,25 +41,29 @@ public class AuthServiceTest {
     public static final Date REFRESH_TOKEN_EXPIRY = new Date(864000000);
     public static final String USER_TEST_EMAIL = "test@example.com";
     public static final String PASSWORD = "password123";
-    @Mock
+    public static final Long TEST_USER_ID = 1L;
+    public static final Integer TEST_ROLE_ID = 1;
+
+    @MockBean
     private AuthenticationManager authenticationManager;
 
-    @Mock
+
+    @MockBean
     private UserRepository userRepository;
 
-    @Mock
-    private PasswordEncoder passwordEncoder;
-
-    @Mock
+    @MockBean
     private JwtUtils jwtUtils;
 
-    @Mock
+    @MockBean
     private UserRolesRepository userRolesRepository;
 
-    @Mock
+    @MockBean
     private BasketRepository basketRepository;
 
+    @MockBean
+    private PasswordEncoder passwordEncoder;
     private AuthService authService;
+
 
     @BeforeEach
     public void setUp() {
@@ -71,27 +80,25 @@ public class AuthServiceTest {
 
     @Test
     public void testGenerateTokenWithValidCredentials() {
-        String email = USER_TEST_EMAIL;
-        String password = PASSWORD;
 
-        TokenRequest tokenRequest = new TokenRequest(email, password);
+        TokenRequest tokenRequest = new TokenRequest(USER_TEST_EMAIL, PASSWORD);
 
-        when(userRepository.findByEmailLike(email)).thenReturn(Optional.of(new User()));
+        when(userRepository.findByEmailLike(USER_TEST_EMAIL)).thenReturn(Optional.of(new User()));
 
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(USER_TEST_EMAIL, PASSWORD);
         when(authenticationManager.authenticate(authentication)).thenReturn(authentication);
 
         TokenResponse expectedTokenResponse = new TokenResponse(ACCESS_TOKEN_EXPIRY, REFRESH_TOKEN_EXPIRY);
 
-        when(jwtUtils.generateToken(email)).thenReturn(expectedTokenResponse);
+        when(jwtUtils.generateToken(USER_TEST_EMAIL)).thenReturn(expectedTokenResponse);
 
         TokenResponse actualTokenResponse = authService.generateToken(tokenRequest);
 
         assertEquals(expectedTokenResponse, actualTokenResponse);
 
-        verify(userRepository, times(1)).findByEmailLike(email);
+        verify(userRepository, times(1)).findByEmailLike(USER_TEST_EMAIL);
         verify(authenticationManager, times(1)).authenticate(authentication);
-        verify(jwtUtils, times(1)).generateToken(email);
+        verify(jwtUtils, times(1)).generateToken(USER_TEST_EMAIL);
     }
 
     @Test
@@ -102,9 +109,8 @@ public class AuthServiceTest {
 
         when(userRepository.findByEmailLike(email)).thenReturn(Optional.empty());
 
-        assertThrows(ItemNotFoundException.class, () -> {
-            authService.generateToken(tokenRequest);
-        });
+        assertThrows(ItemNotFoundException.class, () ->
+                authService.generateToken(tokenRequest));
 
         verify(userRepository, times(1)).findByEmailLike(email);
         verify(authenticationManager, never()).authenticate(any());
@@ -121,19 +127,17 @@ public class AuthServiceTest {
 
     @Test
     public void addRole_roleNotFound_throwItemNotFoundException() {
-        Long userId = 1L;
-        Integer roleId = 1;
-        when(userRolesRepository.findById(roleId)).thenReturn(Optional.empty());
-        assertThrows(ItemNotFoundException.class, () -> authService.addRole(userId, roleId));
+        when(userRolesRepository.findById(TEST_ROLE_ID)).thenReturn(Optional.empty());
+        assertThrows(ItemNotFoundException.class, () -> authService.addRole(TEST_USER_ID, TEST_ROLE_ID));
     }
 
     @Test
     public void addRole_userNotFound_throwItemNotFoundException() {
         Long userId = 1L;
         Integer roleId = 1;
-        UserRole role = new UserRole();
-        role.setId(roleId);
-        when(userRolesRepository.findById(roleId)).thenReturn(Optional.of(role));
+        UserRole userRole = UserRole.builder().id(roleId).build();
+
+        when(userRolesRepository.findById(roleId)).thenReturn(Optional.of(userRole));
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
         assertThrows(ItemNotFoundException.class, () -> authService.addRole(userId, roleId));
     }
@@ -142,18 +146,16 @@ public class AuthServiceTest {
     public void addRole_roleAndUserFound_addRoleToUser() {
         Long userId = 1L;
         Integer roleId = 1;
-        UserRole role = new UserRole();
-        role.setId(roleId);
-        User user = new User();
-        user.setId(userId);
-        user.setRoles(new ArrayList<>());
-        when(userRolesRepository.findById(roleId)).thenReturn(Optional.of(role));
+        UserRole userRole = UserRole.builder().id(roleId).build();
+        User user = User.builder().id(userId).roles(new ArrayList<>()).build();
+
+        when(userRolesRepository.findById(roleId)).thenReturn(Optional.of(userRole));
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         String result = authService.addRole(userId, roleId);
         assertEquals("Role added", result);
         Collection<UserRole> roles = user.getRoles();
         assertEquals(1, roles.size());
-        assertEquals(role, roles.iterator().next());
+        assertEquals(userRole, roles.iterator().next());
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.market.uzum.configuration.jwt.JwtUtils;
+import uz.market.uzum.domains.product.Basket;
 import uz.market.uzum.domains.user.User;
 import uz.market.uzum.domains.user.UserRole;
 import uz.market.uzum.dtos.auth.RefreshTokenRequest;
@@ -23,6 +24,7 @@ import uz.market.uzum.repositories.user.UserRepository;
 import uz.market.uzum.repositories.user.UserRolesRepository;
 
 import java.util.Collections;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class AuthService {
@@ -52,7 +54,7 @@ public class AuthService {
         user.setRoles(Collections.singletonList(this.userRolesRepository.findByCode("USER")));
         User savedUser = this.userRepository.save(user);
         // TODO: 06/05/2023 add basket to user
-//        basketRepository.save(new Basket(Collections.emptyList(), savedUser));
+        CompletableFuture.runAsync(() -> basketRepository.save(new Basket(Collections.emptyList(), savedUser)));
         return savedUser;
     }
 
