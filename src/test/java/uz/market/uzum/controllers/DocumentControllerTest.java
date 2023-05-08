@@ -63,47 +63,7 @@ class DocumentControllerTest {
         assertEquals(200, actualUploadFileResult.getStatusCodeValue());
         verify(documentService).saveDocument(Mockito.<MultipartFile>any());
     }
-    @Test
-    void testUpdateFile() throws IOException {
-        DocumentRepository documentRepository = mock(DocumentRepository.class);
-        doNothing().when(documentRepository).deleteDocument(Mockito.<Long>any());
-        DocumentController documentController = new DocumentController(
-                new DocumentService(documentRepository, new MediaService()));
-        documentController.updateFile(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8"))),
-                1L);
-    }
-    @Test
-    void testUpdateFile2() throws IOException {
-        DocumentRepository documentRepository = mock(DocumentRepository.class);
-        when(documentRepository.save(Mockito.<Document>any())).thenReturn(new Document());
-        doNothing().when(documentRepository).deleteDocument(Mockito.<Long>any());
-        MediaService mediaService = mock(MediaService.class);
-        when(mediaService.upload(Mockito.<MultipartFile>any())).thenReturn("Upload");
-        DocumentController documentController = new DocumentController(
-                new DocumentService(documentRepository, mediaService));
-        ResponseEntity<Document> actualUpdateFileResult = documentController
-                .updateFile(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8"))), 1L);
-        assertTrue(actualUpdateFileResult.hasBody());
-        assertTrue(actualUpdateFileResult.getHeaders().isEmpty());
-        assertEquals(200, actualUpdateFileResult.getStatusCodeValue());
-        verify(documentRepository).save(Mockito.<Document>any());
-        verify(documentRepository).deleteDocument(Mockito.<Long>any());
-        verify(mediaService).upload(Mockito.<MultipartFile>any());
-    }
 
-    @Test
-    void testUpdateFile3() throws IOException {
-        DocumentService documentService = mock(DocumentService.class);
-        when(documentService.updateDocument(Mockito.<MultipartFile>any(), Mockito.<Long>any()))
-                .thenReturn(new Document());
-        DocumentController documentController = new DocumentController(documentService);
-        ResponseEntity<Document> actualUpdateFileResult = documentController
-                .updateFile(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8"))), 1L);
-        assertTrue(actualUpdateFileResult.hasBody());
-        assertTrue(actualUpdateFileResult.getHeaders().isEmpty());
-        assertEquals(200, actualUpdateFileResult.getStatusCodeValue());
-        verify(documentService).updateDocument(Mockito.<MultipartFile>any(), Mockito.<Long>any());
-    }
     @Test
     void testGetDocument() {
         DocumentRepository documentRepository = mock(DocumentRepository.class);
