@@ -54,7 +54,6 @@ public class CommentControllerTest {
 
         when(commentService.create(any())).thenReturn(comment);
 
-        when(commentService.create(any())).thenReturn(comment);
         MvcResult mvcResult = mockMvc.perform(post("/api/v1/comment")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(comment))
@@ -74,7 +73,6 @@ public class CommentControllerTest {
     public void getCommentsByProductIdTest() throws Exception {
 
 
-
         when(commentService.getComments(anyInt())).thenReturn(List.of(Comment.commentBuilder().id(1).build()));
         MvcResult mvcResult = mockMvc.perform(get("/api/v1/comment/{productId}", 1)
                         .contentType("application/json"))
@@ -83,7 +81,7 @@ public class CommentControllerTest {
         MockHttpServletResponse response = mvcResult.getResponse();
         String contentAsString = response.getContentAsString();
         Comment[] comments = objectMapper.readValue(contentAsString, Comment[].class);
-        assertThat(comments.length==1);
+        assertThat(comments.length == 1);
         verify(commentService, atLeastOnce()).getComments(anyInt());
 
 

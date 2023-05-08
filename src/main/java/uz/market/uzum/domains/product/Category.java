@@ -18,7 +18,7 @@ public class Category extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private Category parent;
 
     private String name;

@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.market.uzum.domains.user.UserRole;
-import uz.market.uzum.dtos.roles.UserRoleCreateDTO;
+import uz.market.uzum.dtos.roles.UserRoleDTO;
 import uz.market.uzum.dtos.roles.UserRolePermissionDTO;
 import uz.market.uzum.services.roles.UserRoleService;
 
@@ -52,9 +52,9 @@ public class RoleController {
     })
     @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity<UserRole> create(@Valid UserRoleCreateDTO dto) {
+    public ResponseEntity<UserRole> create(@Valid UserRoleDTO dto) {
         UserRole role = userRoleService.save(dto);
-        return ResponseEntity.ok(role);
+        return ResponseEntity.status(201).body(role);
     }
 
 
@@ -82,7 +82,7 @@ public class RoleController {
     })
     @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<UserRole> update(@PathVariable Integer id, @Valid UserRoleCreateDTO dto) {
+    public ResponseEntity<UserRole> update(@PathVariable Integer id, @Valid UserRoleDTO dto) {
         UserRole role = userRoleService.update(id, dto);
         return ResponseEntity.ok(role);
     }

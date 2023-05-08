@@ -77,10 +77,7 @@ cloud:
       static: ap-south-1
 logging:
   level:
-    com:
-      amazonaws:
-        util:
-          EC2MetadataUtils: error
+    root: error
 
 ---
 spring:

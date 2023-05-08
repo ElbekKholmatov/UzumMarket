@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uz.market.uzum.domains.user.UserPermission;
 import uz.market.uzum.domains.user.UserRole;
-import uz.market.uzum.dtos.roles.UserRoleCreateDTO;
+import uz.market.uzum.dtos.roles.UserRoleDTO;
 import uz.market.uzum.dtos.roles.UserRolePermissionDTO;
 import uz.market.uzum.repositories.user.UserRolesRepository;
 
@@ -38,13 +38,13 @@ class UserRoleServiceTest {
 
     @Test
     void save() {
-        UserRoleCreateDTO userRoleCreateDTO = new UserRoleCreateDTO(ROLE_NAME, ROLE_CODE);
+        UserRoleDTO userRoleDTO = new UserRoleDTO(ROLE_NAME, ROLE_CODE);
 
         int userId = new Random().nextInt(0, 100000);
         UserRole savedUserRole = new UserRole(userId, ROLE_NAME, ROLE_CODE, Collections.emptyList());
 
         when(userRolesRepository.save(any())).thenReturn(savedUserRole);
-        UserRole actualSavedUserRole = userRoleService.save(userRoleCreateDTO);
+        UserRole actualSavedUserRole = userRoleService.save(userRoleDTO);
         assertEquals(userId, actualSavedUserRole.getId());
         assertEquals(ROLE_CODE, actualSavedUserRole.getCode());
         assertEquals(ROLE_NAME, actualSavedUserRole.getName());
@@ -53,7 +53,7 @@ class UserRoleServiceTest {
     @Test
     void update() {
         UserRole userRole = new UserRole(2, ROLE_NAME, ROLE_CODE, Collections.emptyList());
-        UserRoleCreateDTO userRoleUpdateDTO = new UserRoleCreateDTO(UPDATE_ROLE_NAME, UPDATE_ROLE);
+        UserRoleDTO userRoleUpdateDTO = new UserRoleDTO(UPDATE_ROLE_NAME, UPDATE_ROLE);
 
         when(userRolesRepository.findById(2)).thenReturn(Optional.of(userRole));
         when(userRoleService.save(any())).thenReturn(userRole);

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.market.uzum.domains.user.UserPermission;
 import uz.market.uzum.domains.user.UserRole;
-import uz.market.uzum.dtos.roles.UserRoleCreateDTO;
+import uz.market.uzum.dtos.roles.UserRoleDTO;
 import uz.market.uzum.dtos.roles.UserRolePermissionDTO;
 import uz.market.uzum.exceptions.DuplicatePermissionForSingleRoleException;
 import uz.market.uzum.exceptions.DuplicateUserRoleCodeException;
@@ -23,7 +23,7 @@ public class UserRoleService {
     private final UserRolesRepository userRolesRepository;
     private final UserPermissionService userPermissionService;
 
-    public UserRole save(UserRoleCreateDTO dto) {
+    public UserRole save(UserRoleDTO dto) {
         try {
             UserRole role = UserRoleMapper.ROLE_MAPPER.fromUserCreateDTOtoUserRole(dto);
             return userRolesRepository.save(role);
@@ -33,7 +33,7 @@ public class UserRoleService {
         }
     }
 
-    public UserRole update(Integer id, UserRoleCreateDTO dto) {
+    public UserRole update(Integer id, UserRoleDTO dto) {
         UserRole userRole = userRolesRepository.findById(id).orElseThrow(() ->
                 new ItemNotFoundException("Role with id: " + id + " not found"));
         userRole.setName(Objects.requireNonNullElse(dto.getName(), userRole.getName()));

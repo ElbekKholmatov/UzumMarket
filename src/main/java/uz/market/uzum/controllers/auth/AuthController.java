@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,6 +64,7 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(schema = @Schema(implementation = AppErrorDTO.class)))
     })
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_SUPER_ADMIN')")
     @PostMapping({"/addRole"})
     public ResponseEntity<String> addRole(@NonNull Long userId, @NonNull Integer roleId) {
         return ResponseEntity.ok(this.authService.addRole(userId, roleId));

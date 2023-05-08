@@ -40,7 +40,7 @@ public class AuthService {
         String password = tokenRequest.password();
         this.userRepository.findByEmailLike(email).orElseThrow(() -> new ItemNotFoundException("User not found"));
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
-        this.authenticationManager.authenticate(authentication);
+    this.authenticationManager.authenticate(authentication);
         return this.jwtUtils.generateToken(email);
     }
 

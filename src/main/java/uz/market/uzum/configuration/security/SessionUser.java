@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import uz.market.uzum.domains.user.User;
 import uz.market.uzum.repositories.user.UserRepository;
@@ -18,9 +19,10 @@ public class SessionUser {
     public User user() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
+
         Object principal = authentication.getPrincipal();
-        if (!Objects.isNull(principal))
-            return userRepository.findByEmail(principal.toString());
+        if (principal instanceof UserDetails userDT)
+            return userRepository.findByEmail(userDT.getUsername());
         return null;
 
     }
