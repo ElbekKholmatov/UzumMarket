@@ -24,7 +24,7 @@ public class MediaService {
     public final static String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/" + BUCKET_NAME + "/o/%s?alt=media";
 
     //TODO: Change this path to your own path
-    public final static String FIREBASE_TOKEN_PATH = "/home/abdullo/IdeaProjects/UzumMarket/src/main/resources/credentials.json";
+    public final static String FIREBASE_TOKEN_PATH = "/home/developer/Desktop/Java Backend/projects/spring/uzumMarket/src/main/resources/credentials.json";
 
     @SneakyThrows
     public String upload(MultipartFile file) {
