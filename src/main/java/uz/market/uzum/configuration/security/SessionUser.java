@@ -22,6 +22,7 @@ public class SessionUser {
         if (!Objects.isNull(principal))
             return userRepository.findByEmail(principal.toString());
         return null;
+
     }
 
     public Long id() {

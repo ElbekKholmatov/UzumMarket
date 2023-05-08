@@ -11,8 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -20,11 +22,13 @@ import java.util.UUID;
 public class MediaService {
     public final static String BUCKET_NAME = "sheengogram.appspot.com";
     public final static String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/" + BUCKET_NAME + "/o/%s?alt=media";
-    public final static String FIREBASE_TOKEN_PATH = "/home/developer/Desktop/Java Backend/projects/spring/uzumMarket/src/main/resources/credentials.json";
+
+    //TODO: Change this path to your own path
+    public final static String FIREBASE_TOKEN_PATH = "/E:/UzumMarket/UzumMarket/src/main/resources/credentials.json";
 
     @SneakyThrows
-    public String upload(MultipartFile file)  {
-        String fileName = UUID.randomUUID()+file.getOriginalFilename();
+    public String upload(MultipartFile file) {
+        String fileName = UUID.randomUUID() + file.getOriginalFilename();
         StorageOptions
                 .newBuilder()
                 .setCredentials(getCredentials())
@@ -35,8 +39,8 @@ public class MediaService {
     }
 
     @SneakyThrows
-    private Credentials getCredentials(){
-        File file=new File(FIREBASE_TOKEN_PATH);
+    private Credentials getCredentials() {
+        File file = new File(FIREBASE_TOKEN_PATH);
         return GoogleCredentials.fromStream(new FileInputStream(file));
     }
 
@@ -45,5 +49,21 @@ public class MediaService {
                 .newBuilder(BlobId.of(BUCKET_NAME, fileUniqueId))
                 .setContentType(Objects.isNull(contentType) ? "media" : contentType)
                 .build();
+    }
+
+    public static void main(String[] args) throws IOException {
+        Path of = Path.of("credentials.json");
+        File file = new File(of.toUri());
+        String absolutePath = file.getAbsolutePath();
+        String canonicalPath = file.getCanonicalPath();
+        String path = file.getPath();
+
+        System.out.println(path);
+        System.out.println(canonicalPath);
+        System.out.println(absolutePath);
+        File file1 = new File(absolutePath);
+        System.out.println(file1.exists());
+        File absoluteFile = file1.getAbsoluteFile();
+        System.out.println(absoluteFile.exists());
     }
 }
