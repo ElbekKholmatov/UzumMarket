@@ -28,8 +28,6 @@ public class RoleController {
     private final UserRoleService userRoleService;
 
 
-
-
     @Operation(summary = "This API used for creating a role",
             description = "This endpoint was designed for creating a role")
     @ApiResponses(value = {
@@ -53,7 +51,7 @@ public class RoleController {
                     })
     })
     @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
-    @PostMapping("/")
+    @PostMapping("/create")
     public ResponseEntity<UserRole> create(@Valid UserRoleCreateDTO dto) {
         UserRole role = userRoleService.save(dto);
         return ResponseEntity.ok(role);
