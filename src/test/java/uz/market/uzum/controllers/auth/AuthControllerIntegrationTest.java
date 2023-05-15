@@ -42,13 +42,15 @@ public class AuthControllerIntegrationTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @Disabled
+        @Disabled
     @Test
     void testGenerateToken() throws Exception {
-        TokenRequest tokenRequest = new TokenRequest("username", "password");
+        TokenRequest tokenRequest = new TokenRequest("Javohir", "string123");
         TokenResponse tokenResponse = new TokenResponse(TEST_ACCESS_TOKEN, new Date(6000000), TEST_REFRESH_TOKEN, new Date(864000000));
 
         when(authService.generateToken(any())).thenReturn(tokenResponse);
+        when(authService.refreshToken(any())).thenReturn(tokenResponse);
+
 
         mockMvc.perform(post("/api/v1/auth/access/token")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
