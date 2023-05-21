@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import uz.market.uzum.domains.Destination;
 
 @Repository
-public interface DestinationRepository extends JpaRepository<Destination, Long> {
+public interface    DestinationRepository extends JpaRepository<Destination, Long> {
 
 }
